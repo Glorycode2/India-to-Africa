@@ -105,7 +105,7 @@ export default function AdminPage() {
       <nav style={{ backgroundColor: "white", borderBottom: "1px solid #e5e7eb", padding: "16px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <h1 style={{ fontSize: "18px", fontWeight: "700", color: "#111827" }}>Admin Dashboard</h1>
-          <p style={{ fontSize: "12px", color: "#6b7280" }}>India to Africa — Order Management</p>
+          <p style={{ fontSize: "12px", color: "#6b7280" }}>Order Management</p>
         </div>
         <a href="/" style={{ fontSize: "13px", color: "#ea580c", textDecoration: "none" }}>Back to website</a>
       </nav>
