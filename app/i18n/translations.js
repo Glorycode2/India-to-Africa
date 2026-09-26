@@ -64,7 +64,7 @@
     calculated_checkout: "calculated at checkout",
     total: "Total",
     place_order: "Place Order Request",
-    no_payment: "No payment needed now. We will contact you within 24 hours.",
+    no_payment: "No payment needed now. We will contact you within 48 hours.",
 
     // CHECKOUT PAGE
     checkout_title: "Complete Your Order",
@@ -224,7 +224,7 @@
     calculated_checkout: "calculée à la commande",
     total: "Total",
     place_order: "Passer la commande",
-    no_payment: "Aucun paiement requis maintenant. Nous vous contacterons sous 24 heures.",
+    no_payment: "Aucun paiement requis maintenant. Nous vous contacterons sous 48 heures.",
 
     // CHECKOUT PAGE
     checkout_title: "Finaliser votre commande",

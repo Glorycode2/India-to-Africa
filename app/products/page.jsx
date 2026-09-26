@@ -1,12 +1,54 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useLanguage } from "../i18n/useLanguage";
 
-const WHATSAPP_NUMBER = "919XXXXXXXXX";
+const WHATSAPP_NUMBER = "917842280069";
+
+const CATEGORY_TRANSLATIONS = {
+  "Electronics": "Électronique",
+  "Mobile Phones": "Téléphones Mobiles",
+  "Clothing": "Vêtements",
+  "Beauty": "Beauté",
+  "Home & Kitchen": "Maison et Cuisine",
+  "Sports": "Sports",
+  "Books": "Livres",
+  "Toys": "Jouets",
+  "Other": "Autre",
+};
+
+const TRANSLATIONS = {
+  en: {
+    site_name: "AfricaBridge",
+    search: "Search products...",
+    cart_count: "Cart",
+    products_title: "Our Products",
+    products_sub: "Browse our full catalog of Indian products",
+    no_products: "No products yet",
+    no_products_sub: "Products will appear here once added",
+    add_to_cart: "Add to cart",
+    added_to_cart: "Added to cart!",
+    category_all: "All Categories",
+    loading: "Loading...",
+    whatsapp: "Chat on WhatsApp",
+  },
+  fr: {
+    site_name: "AfricaBridge",
+    search: "Rechercher des produits...",
+    cart_count: "Panier",
+    products_title: "Nos Produits",
+    products_sub: "Parcourez notre catalogue complet de produits indiens",
+    no_products: "Aucun produit pour l'instant",
+    no_products_sub: "Les produits apparaîtront ici une fois ajoutés",
+    add_to_cart: "Ajouter au panier",
+    added_to_cart: "Ajouté au panier !",
+    category_all: "Toutes les catégories",
+    loading: "Chargement...",
+    whatsapp: "Chatter sur WhatsApp",
+  },
+};
 
 export default function ProductsPage() {
-  const { lang, switchLang, t } = useLanguage();
+  const [lang, setLang] = useState("fr");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -16,11 +58,20 @@ export default function ProductsPage() {
   const [category, setCategory] = useState("all");
   const [categories, setCategories] = useState([]);
 
+  const t = TRANSLATIONS[lang] || TRANSLATIONS["fr"];
+
   useEffect(() => {
-    const saved = localStorage.getItem("cart");
-    if (saved) setCart(JSON.parse(saved));
+    const savedLang = localStorage.getItem("lang");
+    if (savedLang) setLang(savedLang);
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) setCart(JSON.parse(savedCart));
     loadProducts();
   }, []);
+
+  function switchLang(l) {
+    setLang(l);
+    localStorage.setItem("lang", l);
+  }
 
   async function loadProducts() {
     try {
@@ -66,6 +117,11 @@ export default function ProductsPage() {
     const matchCat = category === "all" || p.category === category;
     return matchSearch && matchCat;
   });
+
+  function getCategoryLabel(cat) {
+    if (lang === "fr") return CATEGORY_TRANSLATIONS[cat] || cat;
+    return cat;
+  }
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f9fafb", fontFamily: "sans-serif" }}>
@@ -113,15 +169,14 @@ export default function ProductsPage() {
           </select>
         </div>
 
-        {/* CATEGORY TABS */}
         {categories.length > 0 && (
           <div style={{ display: "flex", gap: "8px", marginBottom: "24px", flexWrap: "wrap" }}>
-            <button onClick={() => setCategory("all")} style={{ padding: "6px 16px", borderRadius: "50px", border: "none", cursor: "pointer", fontSize: "13px", fontWeight: "600", backgroundColor: category === "all" ? "#ea580c" : "white", color: category === "all" ? "white" : "#374151", border: category === "all" ? "none" : "1px solid #e5e7eb" }}>
+            <button onClick={() => setCategory("all")} style={{ padding: "6px 16px", borderRadius: "50px", border: category === "all" ? "none" : "1px solid #e5e7eb", cursor: "pointer", fontSize: "13px", fontWeight: "600", backgroundColor: category === "all" ? "#ea580c" : "white", color: category === "all" ? "white" : "#374151" }}>
               {t.category_all}
             </button>
             {categories.map(cat => (
-              <button key={cat} onClick={() => setCategory(cat)} style={{ padding: "6px 16px", borderRadius: "50px", cursor: "pointer", fontSize: "13px", fontWeight: "600", backgroundColor: category === cat ? "#ea580c" : "white", color: category === cat ? "white" : "#374151", border: category === cat ? "none" : "1px solid #e5e7eb" }}>
-                {cat}
+              <button key={cat} onClick={() => setCategory(cat)} style={{ padding: "6px 16px", borderRadius: "50px", border: category === cat ? "none" : "1px solid #e5e7eb", cursor: "pointer", fontSize: "13px", fontWeight: "600", backgroundColor: category === cat ? "#ea580c" : "white", color: category === cat ? "white" : "#374151" }}>
+                {getCategoryLabel(cat)}
               </button>
             ))}
           </div>
@@ -138,13 +193,16 @@ export default function ProductsPage() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "24px" }}>
           {filtered.map(product => (
-            <div key={product.id} style={{ backgroundColor: "white", borderRadius: "16px", border: "1px solid #e5e7eb", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.05)", transition: "box-shadow 0.2s" }}
+            <div key={product.id}
+              style={{ backgroundColor: "white", borderRadius: "16px", border: "1px solid #e5e7eb", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.05)", transition: "box-shadow 0.2s" }}
               onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.1)"}
               onMouseLeave={e => e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.05)"}
             >
               <img src={product.image_url || "/placeholder.png"} alt={product.name} style={{ width: "100%", height: "200px", objectFit: "contain", padding: "16px", backgroundColor: "#f9fafb", boxSizing: "border-box" }} />
               <div style={{ padding: "16px" }}>
-                <p style={{ fontSize: "11px", color: "#ea580c", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "6px" }}>{product.category}</p>
+                <p style={{ fontSize: "11px", color: "#ea580c", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "6px" }}>
+                  {getCategoryLabel(product.category)}
+                </p>
                 <h3 style={{ fontSize: "14px", fontWeight: "600", color: "#111827", marginBottom: "8px", lineHeight: "1.4" }}>{product.name}</h3>
                 <p style={{ fontSize: "20px", fontWeight: "800", color: "#111827", marginBottom: "12px" }}>{getPrice(product)}</p>
                 <button onClick={() => addToCart(product)} style={{ width: "100%", backgroundColor: "#ea580c", color: "white", border: "none", borderRadius: "8px", padding: "10px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
