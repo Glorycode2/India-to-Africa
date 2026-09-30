@@ -14,16 +14,16 @@ const TRANSLATIONS = {
     section1_title: "The Simple Version",
     section1_sub: "In 4 steps",
     steps: [
-      { title: "You browse and order", desc: "Visit our website, browse products from Indian platforms like Flipkart, Amazon India and Meesho. Add what you want to your cart and place an order request. No payment needed at this stage." },
+      { title: "You browse and order", desc: "Visit our website, browse products from Indian markets. Add what you want to your cart and place an order request. No payment needed at this stage." },
       { title: "We confirm within 48 hours", desc: "After receiving your order, we contact you within 48 hours by phone or WhatsApp to confirm the products are available, give you the final price including shipping, and explain how to send payment." },
-      { title: "You send payment", desc: "Once confirmed, you send the payment through one of our accepted methods — Mobile Money (Wave, MyNita, Zamani Cash), Western Union, MoneyGram, or bank card. We only purchase your items after payment is received." },
+      { title: "You send payment", desc: "Once confirmed, you send the payment through one of our accepted methods — Mobile Money, Western Union, MoneyGram, or bank card. We only purchase your items after payment is received." },
       { title: "We buy and ship to you", desc: "We purchase your items from Indian platforms, pack them carefully, and ship them internationally. You receive a tracking number once dispatched." },
     ],
 
     section2_title: "Shipping — How We Do It",
     shipping_standard_title: "Standard Shipping (Group Delivery)",
     shipping_standard_desc: "To keep costs affordable for everyone, we use a group shipping method. This means we collect orders from multiple customers and ship them together in one package. This significantly reduces the cost per person. Your package travels from India to Africa, then gets sorted and delivered to your address.",
-    shipping_standard_time: "Estimated time: 14 to 21 days from the date we purchase your items",
+    shipping_standard_time: "Estimated time: 14 to 21 days from the date we purchase your items. May vary",
     shipping_express_title: "Express Shipping (DHL / FedEx)",
     shipping_express_desc: "If you need your items urgently, you can request express shipping through DHL or FedEx. Your package is shipped individually and arrives much faster. However, the cost is significantly higher as you pay the full courier rate alone.",
     shipping_express_time: "Estimated time: 5 to 10 days",
@@ -38,7 +38,7 @@ const TRANSLATIONS = {
     section4_title: "Payment Methods",
     payment_note: "All payments are made after we confirm your order. We never ask for payment before confirmation.",
     payment_methods: [
-      { title: "Mobile Money (Niger)", desc: "Wave, MyNita, Zamani Cash, Orange Money — send to our local agent in Niger who transfers funds to us in India." },
+      { title: "Mobile Money (Niger)", desc: "Wave, MyNita, AmanaTa, Zamani Cash — send to our local agent in Niger who transfers funds to us in India." },
       { title: "Western Union / MoneyGram", desc: "International transfer directly to our name in India. Details provided after order confirmation." },
       { title: "Bank Card (Visa / Mastercard)", desc: "Transfer to our Visa card in India. A small processing fee may apply." },
     ],
@@ -56,7 +56,7 @@ const TRANSLATIONS = {
 
     section7_title: "Frequently Asked Questions",
     faqs: [
-      { q: "How long does delivery take?", a: "Standard group shipping takes 14 to 21 days. Express shipping via DHL takes 5 to 10 days. These are estimates from the date we purchase your items." },
+      { q: "How long does delivery take?", a: "Standard group shipping takes 14 to 21 days but it may vary. Express shipping via DHL takes 5 to 10 days. These are estimates from the date we purchase your items." },
       { q: "How do I track my order?", a: "Once your package is shipped, go to our Track Order page and enter your order ID or phone number. You will see the real-time status of your delivery." },
       { q: "What if my product is out of stock?", a: "We always confirm availability before asking for payment. If a product is unavailable we will offer alternatives or a full refund." },
       { q: "Can I order multiple products at once?", a: "Yes. Add as many products as you want to your cart. They will all be grouped and shipped together, saving you on shipping costs." },
@@ -79,16 +79,16 @@ const TRANSLATIONS = {
     section1_title: "La Version Simple",
     section1_sub: "En 4 étapes",
     steps: [
-      { title: "Vous parcourez et commandez", desc: "Visitez notre site, parcourez les produits des plateformes indiennes comme Flipkart, Amazon Inde et Meesho. Ajoutez ce que vous voulez à votre panier et passez une demande de commande. Aucun paiement requis à ce stade." },
+      { title: "Vous parcourez et commandez", desc: "Visitez notre site, parcourez les produits des marchés indiens. Ajoutez ce que vous voulez à votre panier et passez une demande de commande. Aucun paiement requis à ce stade." },
       { title: "Nous confirmons sous 48 heures", desc: "Après réception de votre commande, nous vous contactons sous 48 heures par téléphone ou WhatsApp pour confirmer la disponibilité des produits, vous donner le prix final avec la livraison, et expliquer comment envoyer le paiement." },
-      { title: "Vous envoyez le paiement", desc: "Une fois confirmé, vous envoyez le paiement via l'un de nos modes acceptés — Mobile Money (Wave, MyNita, Zamani Cash), Western Union, MoneyGram ou carte bancaire. Nous n'achetons vos articles qu'après réception du paiement." },
+      { title: "Vous envoyez le paiement", desc: "Une fois confirmé, vous envoyez le paiement via l'un de nos modes acceptés — Mobile Money, Western Union, MoneyGram ou carte bancaire. Nous n'achetons vos articles qu'après réception du paiement." },
       { title: "Nous achetons et vous livrons", desc: "Nous achetons vos articles sur les plateformes indiennes, les emballons soigneusement et les expédions à l'international. Vous recevez un numéro de suivi une fois expédié." },
     ],
 
     section2_title: "Livraison — Comment nous procédons",
     shipping_standard_title: "Livraison Standard (Groupée)",
     shipping_standard_desc: "Pour maintenir des coûts abordables pour tous, nous utilisons une méthode d'expédition groupée. Cela signifie que nous regroupons les commandes de plusieurs clients et les expédions ensemble dans un seul colis. Cela réduit considérablement le coût par personne. Votre colis voyage de l'Inde vers l'Afrique, puis est trié et livré à votre adresse.",
-    shipping_standard_time: "Délai estimé : 14 à 21 jours à partir de la date d'achat de vos articles",
+    shipping_standard_time: "Délai estimé : 14 à 21 jours à partir de la date d'achat de vos articles. Peut varier",
     shipping_express_title: "Livraison Express (DHL / FedEx)",
     shipping_express_desc: "Si vous avez besoin de vos articles rapidement, vous pouvez demander une livraison express via DHL ou FedEx. Votre colis est expédié individuellement et arrive beaucoup plus vite. Cependant, le coût est nettement plus élevé car vous payez le tarif courier complet seul.",
     shipping_express_time: "Délai estimé : 5 à 10 jours",
@@ -103,7 +103,7 @@ const TRANSLATIONS = {
     section4_title: "Modes de Paiement",
     payment_note: "Tous les paiements sont effectués après confirmation de votre commande. Nous ne demandons jamais de paiement avant la confirmation.",
     payment_methods: [
-      { title: "Mobile Money (Niger)", desc: "Wave, MyNita, Zamani Cash, Orange Money — envoyez à notre agent local au Niger qui nous transfère les fonds en Inde." },
+      { title: "Mobile Money (Niger)", desc: "Wave, MyNita, AmanaTa, Zamani Cash — envoyez à notre agent local au Niger qui nous transfère les fonds en Inde." },
       { title: "Western Union / MoneyGram", desc: "Transfert international directement à notre nom en Inde. Détails fournis après confirmation de commande." },
       { title: "Carte bancaire (Visa / Mastercard)", desc: "Transfert sur notre carte Visa en Inde. Des frais de traitement mineurs peuvent s'appliquer." },
     ],
