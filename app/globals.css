@@ -24,3 +24,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+@media (max-width: 768px) {
+  html, body { overflow-x: hidden; }
+  .ab-nav { padding: 12px 16px !important; flex-wrap: wrap; gap: 10px; }
+  .ab-hero { flex-direction: column !important; padding: 40px 20px 0 20px !important; gap: 24px; }
+  .ab-section { padding: 48px 20px !important; }
+}

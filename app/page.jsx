@@ -57,7 +57,7 @@ export default function HomePage() {
       <div style={{ position: "relative", zIndex: 1 }}>
 
         {/* NAV */}
-        <nav style={{ padding: "16px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "rgba(255,255,255,0.95)", borderBottom: "1px solid #f3f4f6", position: "sticky", top: 0, zIndex: 100, backdropFilter: "blur(8px)" }}>
+        <nav className="ab-nav" style={{ padding: "16px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "rgba(255,255,255,0.95)", borderBottom: "1px solid #f3f4f6", position: "sticky", top: 0, zIndex: 100, backdropFilter: "blur(8px)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                        <div>
               <img src="/afribazaar-logo-color.svg" alt="AfriBazaar" style={{ height: "36px", display: "block" }} />
@@ -82,7 +82,7 @@ export default function HomePage() {
         </nav>
 
         {/* HERO */}
-        <div style={{ backgroundColor: "rgba(255,247,237,0.95)", padding: "80px 40px 0 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "520px" }}>
+        <div className="ab-hero" style={{ backgroundColor: "rgba(255,247,237,0.95)", padding: "80px 40px 0 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "520px" }}>
           <div style={{ flex: 1, paddingTop: "40px" }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", backgroundColor: "#fed7aa", padding: "8px 16px", borderRadius: "50px", fontSize: "13px", color: "#c2410c", fontWeight: "600", marginBottom: "32px" }}>
               {t.badge}
@@ -131,7 +131,7 @@ export default function HomePage() {
         </div>
 
         {/* HOW IT WORKS */}
-        <div id="how-it-works" style={{ padding: "80px 40px", maxWidth: "1000px", margin: "0 auto" }}>
+        <div className="ab-section" id="how-it-works" style={{ padding: "80px 40px", maxWidth: "1000px", margin: "0 auto" }}>
           <h2 style={{ fontSize: "32px", fontWeight: "800", textAlign: "center", color: "#111827", marginBottom: "48px" }}>{t.how_title}</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "24px", textAlign: "center" }}>
             {t.steps.map((step, i) => (
@@ -151,7 +151,7 @@ export default function HomePage() {
         </div>
 
         {/* SHIPPING */}
-        <div id="shipping" style={{ backgroundColor: "rgba(249,250,251,0.95)", padding: "80px 40px" }}>
+        <div className="ab-section" id="shipping" style={{ backgroundColor: "rgba(249,250,251,0.95)", padding: "80px 40px" }}>
           <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
             <h2 style={{ fontSize: "32px", fontWeight: "800", color: "#111827", marginBottom: "16px" }}>{t.ship_title}</h2>
             <p style={{ color: "#6b7280", fontSize: "16px", marginBottom: "40px" }}>{t.ship_sub}</p>
