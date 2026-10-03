@@ -158,7 +158,7 @@ export default function HowItWorksPage() {
         <a href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
                    <img src="/afribazaar-logo-white.svg" alt="AfriBazaar" style={{ height: "32px", display: "block" }} />
         </a>
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <div className="ab-navright" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <div style={{ display: "flex", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "8px", overflow: "hidden" }}>
             {["fr", "en"].map(l => (
               <button key={l} onClick={() => switchLang(l)} style={{ padding: "5px 12px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: lang === l ? "white" : "transparent", color: lang === l ? "#ea580c" : "white" }}>
@@ -171,12 +171,12 @@ export default function HowItWorksPage() {
       </nav>
 
       {/* HERO */}
-      <div style={{ backgroundColor: "#fff7ed", padding: "60px 40px", textAlign: "center" }}>
-        <h1 style={{ fontSize: "40px", fontWeight: "900", color: "#111827", marginBottom: "16px" }}>{t.page_title}</h1>
+      <div className="ab-pagehero" style={{ backgroundColor: "#fff7ed", padding: "60px 40px", textAlign: "center" }}>
+        <h1 className="ab-h1" style={{ fontSize: "40px", fontWeight: "900", color: "#111827", marginBottom: "16px" }}>{t.page_title}</h1>
         <p style={{ fontSize: "18px", color: "#6b7280", maxWidth: "600px", margin: "0 auto" }}>{t.page_sub}</p>
       </div>
 
-      <div style={{ maxWidth: "860px", margin: "0 auto", padding: "60px 24px" }}>
+      <div className="ab-container" style={{ maxWidth: "860px", margin: "0 auto", padding: "60px 24px" }}>
 
         {/* SECTION 1 - 4 STEPS */}
         <div style={{ marginBottom: "60px" }}>
@@ -198,7 +198,7 @@ export default function HowItWorksPage() {
         {/* SECTION 2 - SHIPPING */}
         <div style={{ marginBottom: "60px" }}>
           <h2 style={{ fontSize: "28px", fontWeight: "800", color: "#111827", marginBottom: "32px" }}>{t.section2_title}</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
+          <div className="ab-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
             <div style={{ backgroundColor: "#fff7ed", borderRadius: "16px", padding: "24px", border: "1px solid #fed7aa" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
                 <img src="https://cdn-icons-png.flaticon.com/512/2769/2769339.png" alt="standard" style={{ width: "32px" }} />
@@ -224,7 +224,7 @@ export default function HowItWorksPage() {
         {/* SECTION 3 - DELIVERY OPTIONS */}
         <div style={{ marginBottom: "60px" }}>
           <h2 style={{ fontSize: "28px", fontWeight: "800", color: "#111827", marginBottom: "32px" }}>{t.section3_title}</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
+          <div className="ab-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
             {[
               { title: t.delivery1_title, desc: t.delivery1_desc, icon: "https://cdn-icons-png.flaticon.com/512/2769/2769339.png" },
               { title: t.delivery2_title, desc: t.delivery2_desc, icon: "https://cdn-icons-png.flaticon.com/512/684/684809.png" },
@@ -306,7 +306,6 @@ export default function HowItWorksPage() {
         <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "center", paddingTop: "20px", borderTop: "1px solid #e5e7eb" }}>
           <a href="/products" style={{ backgroundColor: "#ea580c", color: "white", padding: "14px 32px", borderRadius: "50px", fontSize: "15px", fontWeight: "600", textDecoration: "none" }}>{t.browse_btn}</a>
           <a href="/track-order" style={{ backgroundColor: "white", color: "#374151", padding: "14px 32px", borderRadius: "50px", fontSize: "15px", fontWeight: "600", textDecoration: "none", border: "1px solid #d1d5db" }}>{t.track_btn}</a>
-          <a href={"https://wa.me/" + WHATSAPP_NUMBER} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: "#25d366", color: "white", padding: "14px 32px", borderRadius: "50px", fontSize: "15px", fontWeight: "600", textDecoration: "none" }}>{t.contact_btn}</a>
         </div>
       </div>
 

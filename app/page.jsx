@@ -1,5 +1,6 @@
 "use client";
 
+import MobileMenu from "./components/MobileMenu";
 import { useLanguage } from "./i18n/useLanguage";
 
 const WHATSAPP_NUMBER = "917842280069";
@@ -64,12 +65,13 @@ export default function HomePage() {
               <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>{t.tagline}</div>
             </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
-            <a href="#how-it-works" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{t.nav_how}</a>
+          <div className="ab-nav-links" style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+            <div className="ab-links-scroll"><a href="#how-it-works" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{t.nav_how}</a>
             <a href="/products" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{t.nav_products}</a>
             <a href="#shipping" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{t.nav_shipping}</a>
             <a href="/track-order" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{t.nav_track}</a>
             <a href="/login" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{t.nav_login}</a>
+            </div>
             <div style={{ display: "flex", border: "1px solid #e5e7eb", borderRadius: "8px", overflow: "hidden" }}>
               {["fr", "en"].map((l) => (
                 <button key={l} onClick={() => switchLang(l)} style={{ padding: "6px 14px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: lang === l ? "#ea580c" : "white", color: lang === l ? "white" : "#374151" }}>
@@ -79,6 +81,7 @@ export default function HomePage() {
             </div>
             <a href="/products" style={{ backgroundColor: "#ea580c", color: "white", padding: "10px 24px", borderRadius: "50px", fontSize: "14px", fontWeight: "600", textDecoration: "none" }}>{t.nav_shop}</a>
           </div>
+          <MobileMenu lang={lang} switchLang={switchLang} links={[{ href: "#how-it-works", label: t.nav_how }, { href: "/products", label: t.nav_products }, { href: "#shipping", label: t.nav_shipping }, { href: "/track-order", label: t.nav_track }, { href: "/login", label: t.nav_login }]} />
         </nav>
 
         {/* HERO */}
@@ -89,11 +92,7 @@ export default function HomePage() {
             </div>
             <h1 style={{ fontSize: "56px", fontWeight: "900", color: "#111827", lineHeight: "1.1", marginBottom: "24px", maxWidth: "560px" }}>{t.hero_title}</h1>
             <p style={{ fontSize: "18px", color: "#6b7280", maxWidth: "480px", lineHeight: "1.6", marginBottom: "40px" }}>{t.hero_sub}</p>
-            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginBottom: "48px" }}>
-              <a href="/products" style={{ backgroundColor: "#ea580c", color: "white", padding: "14px 32px", borderRadius: "50px", fontSize: "16px", fontWeight: "600", textDecoration: "none" }}>{t.btn_shop}</a>
-              <a href="#how-it-works" style={{ backgroundColor: "white", color: "#374151", padding: "14px 32px", borderRadius: "50px", fontSize: "16px", fontWeight: "600", textDecoration: "none", border: "1px solid #d1d5db" }}>{t.btn_how}</a>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", paddingBottom: "40px" }}>
+            <div className="ab-deliver" style={{ display: "flex", alignItems: "center", gap: "12px", paddingBottom: "40px" }}>
               <span style={{ fontSize: "13px", color: "#9ca3af", fontWeight: "500" }}>{t.delivering_from}</span>
               <img src="https://flagcdn.com/w40/in.png" alt="India" style={{ width: "32px", borderRadius: "3px", boxShadow: "0 1px 4px rgba(0,0,0,0.15)" }} />
               <span style={{ fontSize: "13px", color: "#9ca3af", fontWeight: "500" }}>{t.to}</span>

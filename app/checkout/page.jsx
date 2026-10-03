@@ -252,7 +252,7 @@ export default function CheckoutPage() {
   if (done) {
     return (
       <div style={{ minHeight: "100vh", backgroundColor: "#f9fafb", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "sans-serif" }}>
-        <div style={{ backgroundColor: "white", borderRadius: "16px", padding: "48px", textAlign: "center", maxWidth: "440px", border: "1px solid #e5e7eb" }}>
+        <div className="ab-card" style={{ backgroundColor: "white", borderRadius: "16px", padding: "48px", textAlign: "center", maxWidth: "440px", border: "1px solid #e5e7eb" }}>
           <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="success" style={{ width: "64px", marginBottom: "16px" }} />
           <h1 style={{ fontSize: "24px", fontWeight: "700", color: "#111827", marginBottom: "8px" }}>{t.order_received}</h1>
           <p style={{ fontSize: "14px", color: "#6b7280", marginBottom: "8px" }}>{t.order_ref}:</p>
@@ -276,7 +276,7 @@ export default function CheckoutPage() {
         <a href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
                    <img src="/afribazaar-logo-white.svg" alt="AfriBazaar" style={{ height: "32px", display: "block" }} />
         </a>
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <div className="ab-navright" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <div style={{ display: "flex", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "8px", overflow: "hidden" }}>
             {["fr", "en"].map(l => (
               <button key={l} onClick={() => switchLang(l)} style={{ padding: "5px 12px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: lang === l ? "white" : "transparent", color: lang === l ? "#ea580c" : "white" }}>
@@ -288,7 +288,7 @@ export default function CheckoutPage() {
         </div>
       </nav>
 
-      <div style={{ maxWidth: "960px", margin: "0 auto", padding: "40px 24px" }}>
+      <div className="ab-container" style={{ maxWidth: "960px", margin: "0 auto", padding: "40px 24px" }}>
         <h1 style={{ fontSize: "24px", fontWeight: "700", color: "#111827", marginBottom: "8px" }}>{t.checkout_title}</h1>
         <p style={{ fontSize: "14px", color: "#6b7280", marginBottom: "32px" }}>{t.checkout_sub}</p>
 
@@ -298,7 +298,7 @@ export default function CheckoutPage() {
           </div>
         )}
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px" }}>
+        <div className="ab-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px" }}>
           <div style={{ backgroundColor: "white", borderRadius: "16px", border: "1px solid #e5e7eb", padding: "24px" }}>
             <h2 style={{ fontSize: "16px", fontWeight: "600", color: "#111827", marginBottom: "20px" }}>{t.your_details}</h2>
 
