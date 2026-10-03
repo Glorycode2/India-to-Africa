@@ -106,7 +106,7 @@ export default function HomePage() {
           </div>
 
           {/* TRENDING CARD */}
-          <div style={{ width: "380px", backgroundColor: "white", borderRadius: "20px", padding: "24px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)", marginTop: "20px", flexShrink: 0 }}>
+          <div className="ab-trending" style={{ width: "380px", backgroundColor: "white", borderRadius: "20px", padding: "24px", boxShadow: "0 4px 24px rgba(0,0,0,0.08)", marginTop: "20px", flexShrink: 0 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
               <span style={{ fontWeight: "700", fontSize: "16px", color: "#111827" }}>{t.trending}</span>
               <a href="/products" style={{ color: "#ea580c", fontSize: "13px", fontWeight: "600", textDecoration: "none" }}>{t.live}</a>

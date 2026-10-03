@@ -94,3 +94,8 @@ body {
   .ab-navright { margin-left: auto; gap: 10px !important; }
   .ab-navright > a { text-align: right; max-width: 96px; line-height: 1.25; font-size: 13px !important; }
 }
+
+@media (max-width: 768px) {
+  .ab-trending { width: 100% !important; max-width: 100% !important; box-sizing: border-box; padding: 18px !important; }
+  .ab-hero > div { min-width: 0; max-width: 100%; }
+}
