@@ -29,7 +29,7 @@ const TRANSLATIONS = {
     added_to_cart: "Added to cart!",
     category_all: "All Categories",
     loading: "Loading...",
-    whatsapp: "Chat on WhatsApp",
+    whatsapp: "Chat",
   },
   fr: {
     site_name: "AfriBazaar",
@@ -43,7 +43,7 @@ const TRANSLATIONS = {
     added_to_cart: "Ajouté au panier !",
     category_all: "Toutes les catégories",
     loading: "Chargement...",
-    whatsapp: "Chatter sur WhatsApp",
+    whatsapp: "Chatter",
   },
 };
 

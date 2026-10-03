@@ -3,7 +3,7 @@
     // COMMON
     site_name: "AfriBazaar",
     tagline: "Cross-border shopping made simple",
-    whatsapp: "Chat on WhatsApp",
+    whatsapp: "Chat",
     back_to_home: "Back to Home",
     back_to_products: "Back to Products",
     back_to_cart: "Back to Cart",
@@ -163,7 +163,7 @@
     // COMMON
     site_name: "AfriBazaar",
     tagline: "Shopping transfrontalier simplifié",
-    whatsapp: "Chatter sur WhatsApp",
+    whatsapp: "Chatter",
     back_to_home: "Retour à l'accueil",
     back_to_products: "Retour aux produits",
     back_to_cart: "Retour au panier",

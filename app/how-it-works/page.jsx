@@ -7,7 +7,7 @@ const WHATSAPP_NUMBER = "917842280069";
 const TRANSLATIONS = {
   en: {
     site_name: "AfriBazaar",
-    whatsapp: "Chat on WhatsApp",
+    whatsapp: "Chat",
     page_title: "How It Works",
     page_sub: "Everything you need to know about ordering from India to Africa",
 
@@ -72,7 +72,7 @@ const TRANSLATIONS = {
 
   fr: {
     site_name: "AfriBazaar",
-    whatsapp: "Chatter sur WhatsApp",
+    whatsapp: "Chatter",
     page_title: "Comment ça marche",
     page_sub: "Tout ce que vous devez savoir pour commander de l'Inde vers l'Afrique",
 

@@ -49,7 +49,7 @@ const TRANSLATIONS = {
     phone_required: "Phone number is required",
     city_required: "City is required",
     address_required: "Address is required",
-    whatsapp: "Chat on WhatsApp",
+    whatsapp: "Chat",
   },
   fr: {
     site_name: "AfriBazaar",
@@ -87,7 +87,7 @@ const TRANSLATIONS = {
     phone_required: "Le numéro de téléphone est obligatoire",
     city_required: "La ville est obligatoire",
     address_required: "L'adresse est obligatoire",
-    whatsapp: "Chatter sur WhatsApp",
+    whatsapp: "Chatter",
   },
 };
 

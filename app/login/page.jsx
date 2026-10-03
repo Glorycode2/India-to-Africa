@@ -29,7 +29,7 @@ const TRANSLATIONS = {
     have_account: "Already have an account?",
     sign_up_link: "Sign up",
     log_in_link: "Log in",
-    whatsapp: "Chat on WhatsApp",
+    whatsapp: "Chat",
     success_msg: "Account created! You can now log in.",
   },
   fr: {
@@ -56,7 +56,7 @@ const TRANSLATIONS = {
     have_account: "Déjà un compte ?",
     sign_up_link: "S'inscrire",
     log_in_link: "Se connecter",
-    whatsapp: "Chatter sur WhatsApp",
+    whatsapp: "Chatter",
     success_msg: "Compte créé ! Vous pouvez maintenant vous connecter.",
   },
 };

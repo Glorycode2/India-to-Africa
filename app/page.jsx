@@ -100,7 +100,7 @@ export default function HomePage() {
                 {["ne", "ng", "gh", "sn", "ml", "bf"].map((code) => (
                   <img key={code} src={`https://flagcdn.com/w40/${code}.png`} alt={code} style={{ width: "28px", borderRadius: "3px", boxShadow: "0 1px 4px rgba(0,0,0,0.15)" }} />
                 ))}
-                <span style={{ fontSize: "13px", color: "#9ca3af", alignSelf: "center", fontWeight: "500" }}>& more</span>
+                <span style={{ fontSize: "13px", color: "#9ca3af", alignSelf: "center", fontWeight: "500" }}>{lang === "fr" ? "& plus" : "& more"}</span>
               </div>
             </div>
           </div>
