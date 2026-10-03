@@ -145,3 +145,19 @@ nav.ab-nav div img[src="/afribazaar-logo-color.svg"] { height: 60px !important; 
 @media (max-width: 768px) {
   nav.ab-nav div img[src="/afribazaar-logo-color.svg"] { height: 38px !important; }
 }
+
+@media (max-width: 768px) {
+  .ab-nav { padding: 6px 12px !important; }
+  nav.ab-nav div img[src="/afribazaar-logo-color.svg"] { height: 40px !important; }
+}
+
+@media (max-width: 768px) {
+  .ab-hero { padding-top: 14px !important; gap: 14px !important; }
+  .ab-hero > div:first-child { padding-top: 0 !important; }
+}
+
+@media (max-width: 768px) {
+  div.ab-hero { padding-top: 0 !important; margin-top: 0 !important; min-height: 0 !important; justify-content: flex-start !important; align-items: stretch !important; gap: 0 !important; }
+  div.ab-hero > div:first-child { padding-top: 0 !important; margin-top: 0 !important; }
+  div.ab-hero > div:first-child > p:first-child { margin: 0 0 12px 0 !important; padding-top: 10px !important; }
+}

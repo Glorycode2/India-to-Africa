@@ -62,7 +62,6 @@ export default function HomePage() {
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                        <div>
               <img src="/afribazaar-logo-color.svg" alt="AfriBazaar" style={{ height: "36px", display: "block" }} />
-              <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>{t.tagline}</div>
             </div>
           </div>
           <div className="ab-nav-links" style={{ display: "flex", alignItems: "center", gap: "24px" }}>
@@ -87,6 +86,7 @@ export default function HomePage() {
         {/* HERO */}
         <div className="ab-hero" style={{ backgroundColor: "rgba(255,247,237,0.95)", padding: "80px 40px 0 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "520px" }}>
           <div style={{ flex: 1, paddingTop: "40px" }}>
+            <p style={{ fontSize: "14px", fontWeight: "500", color: "#6b7280", marginBottom: "14px" }}>{t.tagline}</p>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", backgroundColor: "#fed7aa", padding: "8px 16px", borderRadius: "50px", fontSize: "13px", color: "#c2410c", fontWeight: "600", marginBottom: "32px" }}>
               {t.badge}
             </div>
