@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
-export default function MobileMenu({ links }) {
+export default function MobileMenu({ links, cta }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
@@ -19,6 +19,7 @@ export default function MobileMenu({ links }) {
         {links.map((l) => (
           <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ color: "#111827", textDecoration: "none", fontSize: "17px", fontWeight: "600", padding: "14px 4px", borderBottom: "1px solid #f3f4f6" }}>{l.label}</a>
         ))}
+        {cta ? <a href="/products" onClick={() => setOpen(false)} style={{ marginTop: "24px", backgroundColor: "#ea580c", color: "white", textAlign: "center", padding: "14px", borderRadius: "50px", fontSize: "15px", fontWeight: "700", textDecoration: "none" }}>{cta}</a> : null}
       </div>
     </>
   );

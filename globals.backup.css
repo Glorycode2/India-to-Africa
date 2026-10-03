@@ -28,6 +28,7 @@ body {
 
 @media (max-width: 768px) {
   html, body { overflow-x: hidden; }
+  .ab-nav { padding: 12px 16px !important; flex-wrap: wrap; gap: 10px; }
   .ab-hero { flex-direction: column !important; padding: 40px 20px 0 20px !important; gap: 24px; }
   .ab-section { padding: 48px 20px !important; }
 }
@@ -38,16 +39,36 @@ body {
 }
 
 @media (max-width: 768px) {
+  .ab-nav-links { width: 100%; flex-wrap: wrap; justify-content: center; gap: 10px 16px !important; }
 }
 
+.ab-links-scroll { display: contents; }
 
 @media (max-width: 768px) {
+  .ab-nav-links { display: contents !important; }
+  .ab-nav > div:first-child { margin-right: auto; }
+  .ab-nav-links > div:not(.ab-links-scroll) { order: 2; }
+  .ab-nav-links > a:last-child { order: 3; padding: 8px 14px !important; font-size: 12px !important; }
+  .ab-links-scroll { display: flex; order: 4; width: 100%; gap: 18px; overflow-x: auto; white-space: nowrap; padding-bottom: 4px; scrollbar-width: none; }
+  .ab-links-scroll::-webkit-scrollbar { display: none; }
+  .ab-links-scroll a { flex: 0 0 auto; }
+}
+.ab-menu-wrap { display: none; }
+@media (max-width: 768px) { .ab-nav-links { display: none !important; } .ab-menu-wrap { display: block !important; } }
+
+@media (max-width: 768px) {
+  .ab-nav-links { display: flex !important; align-items: center; gap: 10px !important; margin-left: auto; }
+  .ab-links-scroll { display: none !important; }
+  .ab-menu-wrap { display: block !important; }
 }
 
 @media (max-width: 768px) {
-}
-
-@media (max-width: 768px) {
+  .ab-nav { flex-wrap: nowrap !important; padding: 10px 14px !important; gap: 8px !important; }
+  .ab-nav > div:first-child { min-width: 0; margin-right: auto; }
+  .ab-nav > div:first-child img { height: 30px !important; }
+  .ab-nav .ab-nav-links { flex-wrap: nowrap !important; gap: 8px !important; margin-left: 0 !important; }
+  .ab-nav .ab-nav-links button { padding: 4px 9px !important; font-size: 11px !important; }
+  .ab-nav .ab-nav-links > a:last-child { padding: 7px 12px !important; font-size: 12px !important; white-space: nowrap; }
 }
 
 @media (max-width: 768px) {
@@ -112,15 +133,22 @@ body {
   .ab-grid button { padding: 7px 8px !important; font-size: 12px !important; border-radius: 8px !important; }
 }
 
+.ab-nav:has(img[src="/afribazaar-logo-color.svg"]) { padding-top: 8px !important; padding-bottom: 8px !important; }
+img[src="/afribazaar-logo-color.svg"] { height: 46px !important; }
 
 @media (max-width: 768px) {
+  img[src="/afribazaar-logo-color.svg"] { height: 36px !important; }
 }
 
+nav.ab-nav div img[src="/afribazaar-logo-color.svg"] { height: 60px !important; }
 
 @media (max-width: 768px) {
+  nav.ab-nav div img[src="/afribazaar-logo-color.svg"] { height: 38px !important; }
 }
 
 @media (max-width: 768px) {
+  .ab-nav { padding: 6px 12px !important; }
+  nav.ab-nav div img[src="/afribazaar-logo-color.svg"] { height: 40px !important; }
 }
 
 @media (max-width: 768px) {
@@ -135,27 +163,16 @@ body {
 }
 
 @media (max-width: 768px) {
+  nav.ab-nav .ab-nav-links > a:last-child { display: none !important; }
+  nav.ab-nav div img[src="/afribazaar-logo-color.svg"] { height: 46px !important; }
 }
 
 @media (max-width: 768px) {
+  nav.ab-nav a[href="/products"][style*="ea580c"] { display: none !important; }
 }
 
 @media (max-width: 768px) {
-}
-
-.ab-menu-wrap { display: none; }
-.ab-links-scroll { display: contents; }
-nav.ab-nav:has(.ab-nav-links) { padding-top: 8px !important; padding-bottom: 8px !important; }
-nav.ab-nav:has(.ab-nav-links) img[src="/afribazaar-logo-color.svg"] { height: 60px !important; width: auto !important; max-width: none !important; }
-
-@media (max-width: 768px) {
-  .ab-nav { flex-wrap: nowrap !important; padding: 8px 12px !important; gap: 8px !important; }
-  nav.ab-nav:has(.ab-nav-links) { justify-content: flex-start !important; }
-  nav.ab-nav:has(.ab-nav-links) > div:first-child { flex: 0 0 auto !important; margin-right: auto !important; min-width: max-content !important; }
-  nav.ab-nav:has(.ab-nav-links) img[src="/afribazaar-logo-color.svg"] { height: 46px !important; width: auto !important; max-width: none !important; }
-  nav.ab-nav .ab-nav-links { display: flex !important; align-items: center !important; flex-wrap: nowrap !important; gap: 6px !important; margin-left: 0 !important; width: auto !important; }
-  nav.ab-nav .ab-links-scroll { display: none !important; }
-  nav.ab-nav .ab-nav-links > a { display: none !important; }
-  nav.ab-nav .ab-nav-links button { padding: 4px 8px !important; font-size: 11px !important; }
-  .ab-menu-wrap { display: block !important; flex: 0 0 auto; }
+  nav.ab-nav .ab-nav-links { margin-left: 0 !important; }
+  nav.ab-nav > div:first-child { margin-right: auto !important; }
+  nav.ab-nav div img[src="/afribazaar-logo-color.svg"] { height: 52px !important; width: auto !important; max-width: none !important; }
 }

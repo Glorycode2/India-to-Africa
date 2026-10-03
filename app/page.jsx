@@ -80,7 +80,7 @@ export default function HomePage() {
             </div>
             <a href="/products" style={{ backgroundColor: "#ea580c", color: "white", padding: "10px 24px", borderRadius: "50px", fontSize: "14px", fontWeight: "600", textDecoration: "none" }}>{t.nav_shop}</a>
           </div>
-          <MobileMenu lang={lang} switchLang={switchLang} links={[{ href: "#how-it-works", label: t.nav_how }, { href: "/products", label: t.nav_products }, { href: "#shipping", label: t.nav_shipping }, { href: "/track-order", label: t.nav_track }, { href: "/login", label: t.nav_login }]} />
+          <MobileMenu cta={t.nav_shop} links={[{ href: "#how-it-works", label: t.nav_how }, { href: "/products", label: t.nav_products }, { href: "#shipping", label: t.nav_shipping }, { href: "/track-order", label: t.nav_track }, { href: "/login", label: t.nav_login }]} />
         </nav>
 
         {/* HERO */}
