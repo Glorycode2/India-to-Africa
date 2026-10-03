@@ -19,7 +19,7 @@ const TRENDING = [
   { img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=120&q=80", en: "Indian Fashion Dresses", fr: "Robes de Mode Indienne", sub: "Myntra • Meesho", price_en: "From ₹999", price_fr: "À partir de ₹999" },
   { img: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&q=80", en: "Smartphones & Electronics", fr: "Smartphones et Électronique", sub: "Amazon India", price_en: "From ₹8,999", price_fr: "À partir de ₹8,999" },
   { img: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=120&q=80", en: "Beauty & Skincare", fr: "Beauté et Soins", sub: "Nykaa", price_en: "From ₹299", price_fr: "À partir de ₹299" },
-  { img: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=120&q=80", en: "Home & Kitchen", fr: "Maison et Cuisine", sub: "Flipkart", price_en: "From ₹499", price_fr: "À partir de ₹499" },
+  { img: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=120&q=80", en: "Home & Kitchen", fr: "Maison et Cuisine", sub: "Amazon India • Flipkart", price_en: "From ₹499", price_fr: "À partir de ₹499" },
 ];
 
 const STEP_ICONS = [
@@ -59,10 +59,9 @@ export default function HomePage() {
         {/* NAV */}
         <nav style={{ padding: "16px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "rgba(255,255,255,0.95)", borderBottom: "1px solid #f3f4f6", position: "sticky", top: 0, zIndex: 100, backdropFilter: "blur(8px)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <img src="https://flagcdn.com/w40/in.png" alt="India" style={{ width: "32px", borderRadius: "4px" }} />
-            <div>
-              <div style={{ fontWeight: "800", fontSize: "18px", color: "#111827" }}>{t.site_name}</div>
-              <div style={{ fontSize: "11px", color: "#6b7280" }}>{t.tagline}</div>
+                       <div>
+              <img src="/afribazaar-logo-color.svg" alt="AfriBazaar" style={{ height: "36px", display: "block" }} />
+              <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>{t.tagline}</div>
             </div>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
@@ -170,8 +169,7 @@ export default function HomePage() {
         {/* FOOTER */}
         <div style={{ backgroundColor: "#111827", color: "#9ca3af", textAlign: "center", padding: "40px", fontSize: "14px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", marginBottom: "8px" }}>
-            <img src="https://flagcdn.com/w40/in.png" alt="India" style={{ width: "24px", borderRadius: "3px" }} />
-            <p style={{ fontWeight: "800", color: "white", fontSize: "18px" }}>{t.site_name}</p>
+                        <img src="/afribazaar-logo-white.svg" alt="AfriBazaar" style={{ height: "32px", display: "block" }} />
           </div>
           <p style={{ marginBottom: "16px" }}>{t.footer_copy}</p>
           <div style={{ display: "flex", justifyContent: "center", gap: "24px" }}>

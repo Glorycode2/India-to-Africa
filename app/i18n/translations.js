@@ -1,7 +1,7 @@
  export const TRANSLATIONS = {
   en: {
     // COMMON
-    site_name: "AfricaBridge",
+    site_name: "AfriBazaar",
     tagline: "Cross-border shopping made simple",
     whatsapp: "Chat on WhatsApp",
     back_to_home: "Back to Home",
@@ -34,7 +34,7 @@
     learn_more: "Learn More",
     ship_title: "We ship to your country",
     ship_sub: "Currently delivering to these African countries",
-    footer_copy: "2026 AfricaBridge. All rights reserved. Based in India, delivering to Africa.",
+    footer_copy: "2026 AfriBazaar. All rights reserved. Based in India, delivering to Africa.",
     steps: [
       { title: "Browse & Order", desc: "Browse products and place an order request. No payment needed upfront." },
       { title: "We Confirm", desc: "We confirm availability and contact you within 48 hours with the total cost." },
@@ -161,7 +161,7 @@
 
   fr: {
     // COMMON
-    site_name: "AfricaBridge",
+    site_name: "AfriBazaar",
     tagline: "Shopping transfrontalier simplifié",
     whatsapp: "Chatter sur WhatsApp",
     back_to_home: "Retour à l'accueil",
@@ -194,7 +194,7 @@
     learn_more: "En savoir plus",
     ship_title: "Nous livrons dans votre pays",
     ship_sub: "Actuellement en livraison dans ces pays africains",
-    footer_copy: "2026 AfricaBridge. Tous droits réservés. Basé en Inde, livraison en Afrique.",
+    footer_copy: "2026 AfriBazaar. Tous droits réservés. Basé en Inde, livraison en Afrique.",
     steps: [
       { title: "Parcourir et commander", desc: "Parcourez les produits et passez une demande de commande. Aucun paiement requis à l'avance." },
       { title: "Nous confirmons", desc: "Nous confirmons la disponibilité et vous contactons sous 48 heures avec le coût total." },

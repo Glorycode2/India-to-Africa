@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const TRANSLATIONS = {
   en: {
-    site_name: "AfricaBridge",
+    site_name: "AfriBazaar",
     dashboard_title: "Admin Dashboard",
     dashboard_sub: "Order Management",
     back_to_site: "Back to website",
@@ -37,7 +37,7 @@ const TRANSLATIONS = {
     login_btn: "Login",
   },
   fr: {
-    site_name: "AfricaBridge",
+    site_name: "AfriBazaar",
     dashboard_title: "Tableau de bord",
     dashboard_sub: "Gestion des commandes",
     back_to_site: "Retour au site",

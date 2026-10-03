@@ -6,7 +6,7 @@ const WHATSAPP_NUMBER = "917842280069";
 
 const TRANSLATIONS = {
   en: {
-    site_name: "AfricaBridge",
+    site_name: "AfriBazaar",
     login_title: "Welcome back",
     login_sub: "Log in to track your orders",
     signup_title: "Create account",
@@ -33,7 +33,7 @@ const TRANSLATIONS = {
     success_msg: "Account created! You can now log in.",
   },
   fr: {
-    site_name: "AfricaBridge",
+    site_name: "AfriBazaar",
     login_title: "Bon retour",
     login_sub: "Connectez-vous pour suivre vos commandes",
     signup_title: "Créer un compte",
@@ -159,8 +159,7 @@ export default function LoginPage() {
     <div style={{ minHeight: "100vh", backgroundColor: "#f9fafb", fontFamily: "sans-serif", display: "flex", flexDirection: "column" }}>
       <nav style={{ backgroundColor: "#ea580c", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <a href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-          <img src="https://flagcdn.com/w40/in.png" alt="India" style={{ width: "28px", borderRadius: "3px" }} />
-          <span style={{ color: "white", fontWeight: "800", fontSize: "18px" }}>{t.site_name}</span>
+                   <img src="/afribazaar-logo-white.svg" alt="AfriBazaar" style={{ height: "32px", display: "block" }} />
         </a>
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <div style={{ display: "flex", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "8px", overflow: "hidden" }}>

@@ -4,8 +4,8 @@ import "./globals.css";
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "India to Africa",
-  description: "Shop Indian products delivered to Africa",
+  title: "AfriBazaar",
+  description: "Achetez en Inde, recevez en Afrique | Shop in India, delivered to Africa",
 };
 
 export default function RootLayout({ children }) {
