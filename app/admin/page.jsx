@@ -83,7 +83,7 @@ const STATUS_COLORS = {
   delayed: { bg: "#fef3c7", color: "#92400e" },
 };
 
-const ADMIN_PASSWORD = "admin123";
+const ADMIN_EMAIL = "yayenasrine@gmail.com";
 
 export default function AdminPage() {
   const [lang, setLang] = useState("fr");
@@ -105,11 +105,17 @@ export default function AdminPage() {
     localStorage.setItem("lang", l);
   }
 
-  function handleLogin() {
-    if (password === ADMIN_PASSWORD) {
+  async function handleLogin() {
+    try {
+      const { createClient } = await import("@supabase/supabase-js");
+      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const { error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password });
+      if (error) throw error;
+      const { data: row } = await sb.from("admins").select("user_id").maybeSingle();
+      if (!row) { await sb.auth.signOut(); throw new Error("not admin"); }
       setLoggedIn(true);
       loadOrders();
-    } else {
+    } catch (e) {
       alert(lang === "fr" ? "Mot de passe incorrect" : "Wrong password");
     }
   }

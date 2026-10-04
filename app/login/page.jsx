@@ -30,7 +30,7 @@ const TRANSLATIONS = {
     sign_up_link: "Sign up",
     log_in_link: "Log in",
     whatsapp: "Chat",
-    success_msg: "Account created! You can now log in.",
+    success_msg: "Account created! We sent you a confirmation email. Check your inbox and your spam folder, click the link, then log in.",
   },
   fr: {
     site_name: "AfriBazaar",
@@ -57,7 +57,7 @@ const TRANSLATIONS = {
     sign_up_link: "S'inscrire",
     log_in_link: "Se connecter",
     whatsapp: "Chatter",
-    success_msg: "Compte créé ! Vous pouvez maintenant vous connecter.",
+    success_msg: "Compte cr\u00e9\u00e9 ! Un e-mail de confirmation vous a \u00e9t\u00e9 envoy\u00e9. V\u00e9rifiez votre bo\u00eete de r\u00e9ception et vos spams, cliquez sur le lien, puis connectez-vous.",
   },
 };
 
@@ -148,7 +148,7 @@ export default function LoginPage() {
       }
 
     } catch (err) {
-      setMessage(err.message || (lang === "fr" ? "Une erreur s'est produite" : "Something went wrong"));
+      setMessage((/not confirmed/i.test(err.message || "") ? (lang === "fr" ? "E-mail non confirm\u00e9. V\u00e9rifiez votre bo\u00eete mail et vos spams, puis cliquez sur le lien de confirmation." : "Email not confirmed. Check your inbox and your spam folder, then click the confirmation link.") : err.message) || (lang === "fr" ? "Une erreur s'est produite" : "Something went wrong"));
       setMessageType("error");
     }
 
