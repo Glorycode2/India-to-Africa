@@ -163,3 +163,30 @@ nav.ab-nav:has(.ab-nav-links) img[src="/afribazaar-logo-color.svg"] { height: 60
 .ab-grid > div { position: relative; }
 
 .ab-grid > div { cursor: pointer; }
+
+@media (max-width: 768px) {
+  .ab-adminnav { padding: 12px 14px !important; flex-wrap: wrap !important; gap: 8px !important; }
+}
+
+@media (max-width: 768px) {
+  .ab-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .ab-adminnav > div { flex-wrap: wrap !important; gap: 8px !important; }
+}
+
+@media (max-width: 768px) {
+  div.ab-stats { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+}
+
+@media (max-width: 768px) {
+  div.ab-stats { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 8px !important; }
+  div.ab-stats > div { padding: 8px !important; }
+  div.ab-stats p { overflow-wrap: anywhere; }
+  div.ab-stats p:first-child { font-size: 10px !important; }
+  div.ab-stats p:last-child { font-size: 17px !important; }
+}
+
+@media (max-width: 768px) {
+  div.ab-prow { flex-wrap: wrap !important; padding: 14px 16px !important; gap: 12px !important; }
+  div.ab-prow > div:nth-child(2) { flex: 1 1 0 !important; min-width: 0 !important; }
+  div.ab-pbtns { flex: 1 1 100% !important; flex-wrap: wrap !important; }
+}

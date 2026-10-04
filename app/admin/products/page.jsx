@@ -10,6 +10,7 @@ const EMPTY_FORM = {
   price_xof: "",
   your_price_inr: "",
   image_url: "",
+    images_text: "",
   source_url: "",
   source_platform: "Flipkart",
   category: "Electronics",
@@ -82,6 +83,7 @@ export default function AdminProductsPage() {
         price_xof: parseFloat(form.price_xof) || parseFloat(form.price_usd) * 605,
         your_price_inr: parseFloat(form.your_price_inr) || parseFloat(form.price_inr),
         image_url: form.image_url,
+        images: [form.image_url, ...(form.images_text || "").split(/\r?\n/)].map((s) => (s || "").trim()).filter(Boolean),
         source_url: form.source_url,
         source_platform: form.source_platform,
         category: form.category,
@@ -91,10 +93,10 @@ export default function AdminProductsPage() {
       };
 
       if (editing) {
-        await supabase.from("products").update(payload).eq("id", editing);
+        { const { data: saved, error: saveErr } = await supabase.from("products").update(payload).eq("id", editing).select(); if (saveErr) throw saveErr; if (!saved || saved.length === 0) throw new Error("Not saved: no permission, try logging out of the customer account"); }
         setMessage("Product updated successfully");
       } else {
-        await supabase.from("products").insert([payload]);
+        { const { error: saveErr } = await supabase.from("products").insert([payload]); if (saveErr) throw saveErr; }
         setMessage("Product added successfully");
       }
 
@@ -139,6 +141,7 @@ export default function AdminProductsPage() {
       price_xof: product.price_xof || "",
       your_price_inr: product.your_price_inr || "",
       image_url: product.image_url || "",
+      images_text: (product.images || []).filter((u) => u !== product.image_url).join("\n"),
       source_url: product.source_url || "",
       source_platform: product.source_platform || "Flipkart",
       category: product.category || "Electronics",
@@ -178,7 +181,7 @@ export default function AdminProductsPage() {
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f9fafb", fontFamily: "sans-serif" }}>
-      <nav style={{ backgroundColor: "white", borderBottom: "1px solid #e5e7eb", padding: "16px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <nav className="ab-adminnav" style={{ backgroundColor: "white", borderBottom: "1px solid #e5e7eb", padding: "16px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <h1 style={{ fontSize: "18px", fontWeight: "700", color: "#111827" }}>Product Management</h1>
           <p style={{ fontSize: "12px", color: "#6b7280" }}>Add, edit and manage your products</p>
@@ -209,7 +212,7 @@ export default function AdminProductsPage() {
               {editing ? "Edit Product" : "Add New Product"}
             </h2>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+            <div className="ab-stack" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
 
               <div style={{ gridColumn: "1 / -1" }}>
                 <label style={{ display: "block", fontSize: "13px", color: "#374151", fontWeight: "500", marginBottom: "6px" }}>Product name *</label>
@@ -289,6 +292,17 @@ export default function AdminProductsPage() {
                 {form.image_url && (
                   <img src={form.image_url} alt="preview" style={{ width: "80px", height: "80px", objectFit: "contain", marginTop: "8px", border: "1px solid #e5e7eb", borderRadius: "8px" }} />
                 )}
+              </div>
+
+              <div style={{ gridColumn: "1 / -1" }}>
+                <label style={{ display: "block", fontSize: "13px", color: "#374151", fontWeight: "500", marginBottom: "6px" }}>More photos (one image link per line)</label>
+                <textarea
+                  value={form.images_text || ""}
+                  onChange={(e) => update("images_text", e.target.value)}
+                  rows={4}
+                  placeholder="https://..."
+                  style={{ width: "100%", border: "1px solid #d1d5db", borderRadius: "8px", padding: "10px 14px", fontSize: "14px", fontFamily: "inherit", boxSizing: "border-box", color: "#111827", backgroundColor: "white" }}
+                />
               </div>
 
               <div style={{ gridColumn: "1 / -1" }}>
@@ -384,7 +398,7 @@ export default function AdminProductsPage() {
           )}
 
           {products.map((product, i) => (
-            <div key={product.id} style={{ display: "flex", alignItems: "center", gap: "16px", padding: "16px 24px", borderBottom: i < products.length - 1 ? "1px solid #f3f4f6" : "none" }}>
+            <div key={product.id} className="ab-prow" style={{ display: "flex", alignItems: "center", gap: "16px", padding: "16px 24px", borderBottom: i < products.length - 1 ? "1px solid #f3f4f6" : "none" }}>
               <img
                 src={product.image_url || "/placeholder.png"}
                 alt={product.name}
@@ -393,10 +407,10 @@ export default function AdminProductsPage() {
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: "14px", fontWeight: "600", color: "#111827" }}>{product.name}</p>
                 <p style={{ fontSize: "12px", color: "#6b7280", marginTop: "2px" }}>{product.category} • {product.source_platform}</p>
-                <p style={{ fontSize: "13px", color: "#ea580c", fontWeight: "600", marginTop: "2px" }}>${product.price_usd} • CFA {Math.round(product.price_xof || product.price_usd * 605).toLocaleString()}</p>
+                <p style={{ fontSize: "13px", color: "#ea580c", fontWeight: "600", marginTop: "2px" }}>${product.price_usd} • CFA {Math.round(product.price_xof || product.price_usd * 605).toLocaleString()}{" \u2022 \u20B9" + (product.price_inr || 0)}</p>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div className="ab-pbtns" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <button
                   onClick={() => toggleStock(product.id, product.in_stock)}
                   style={{ padding: "5px 12px", borderRadius: "50px", border: "none", fontSize: "12px", fontWeight: "600", cursor: "pointer", backgroundColor: product.in_stock ? "#dcfce7" : "#fee2e2", color: product.in_stock ? "#166534" : "#991b1b" }}

@@ -185,7 +185,7 @@ export default function AdminPage() {
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f9fafb", fontFamily: "sans-serif" }}>
-      <nav style={{ backgroundColor: "white", borderBottom: "1px solid #e5e7eb", padding: "16px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <nav className="ab-adminnav" style={{ backgroundColor: "white", borderBottom: "1px solid #e5e7eb", padding: "16px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <h1 style={{ fontSize: "18px", fontWeight: "700", color: "#111827" }}>{t.dashboard_title}</h1>
           <p style={{ fontSize: "12px", color: "#6b7280" }}>{t.site_name} {t.dashboard_sub}</p>
@@ -203,18 +203,17 @@ export default function AdminPage() {
         </div>
       </nav>
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "32px 24px" }}>
+      <div className="ab-container" style={{ maxWidth: "1200px", margin: "0 auto", padding: "32px 24px" }}>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", marginBottom: "32px" }}>
+        <div className="ab-stats" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "32px" }}>
           {[
             { label: t.total_orders, value: stats.total, bg: "white" },
-            { label: t.pending, value: stats.pending, bg: "#fef9c3" },
-            { label: t.shipped, value: stats.shipped, bg: "#dbeafe" },
             { label: t.revenue, value: "$" + stats.revenue.toFixed(0), bg: "#dcfce7" },
+            ...STATUS_OPTIONS.map((s) => ({ label: t[s] || s, value: orders.filter((o) => o.status === s).length, bg: STATUS_COLORS[s]?.bg || "#f3f4f6" })),
           ].map((stat, i) => (
-            <div key={i} style={{ backgroundColor: stat.bg, borderRadius: "12px", border: "1px solid #e5e7eb", padding: "20px 24px" }}>
-              <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "8px" }}>{stat.label}</p>
-              <p style={{ fontSize: "28px", fontWeight: "700", color: "#111827" }}>{stat.value}</p>
+            <div key={i} style={{ backgroundColor: stat.bg, borderRadius: "12px", border: "1px solid #e5e7eb", padding: "12px 14px" }}>
+              <p style={{ fontSize: "12px", color: "#6b7280", marginBottom: "4px" }}>{stat.label}</p>
+              <p style={{ fontSize: "22px", fontWeight: "700", color: "#111827" }}>{stat.value}</p>
             </div>
           ))}
         </div>
@@ -239,6 +238,7 @@ export default function AdminPage() {
 
         {filtered.length > 0 && (
           <div style={{ backgroundColor: "white", borderRadius: "12px", border: "1px solid #e5e7eb", overflow: "hidden" }}>
+            <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ backgroundColor: "#f9fafb", borderBottom: "1px solid #e5e7eb" }}>
@@ -276,6 +276,7 @@ export default function AdminPage() {
                 ))}
               </tbody>
             </table>
+          </div>
           </div>
         )}
       </div>

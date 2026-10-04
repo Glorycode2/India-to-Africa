@@ -2,10 +2,20 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
-export default function MobileMenu({ links, cta }) {
+export default function MobileMenu({ links, cta, logoutLabel }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
+
+  const [logged, setLogged] = useState(false);
+  useEffect(() => {
+    (async () => {
+      const { createClient } = await import("@supabase/supabase-js");
+      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const { data: { session } } = await sb.auth.getSession();
+      setLogged(!!session);
+    })();
+  }, []);
 
   const panel = (
     <>
@@ -20,6 +30,7 @@ export default function MobileMenu({ links, cta }) {
           <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ color: "#111827", textDecoration: "none", fontSize: "17px", fontWeight: "600", padding: "14px 4px", borderBottom: "1px solid #f3f4f6" }}>{l.label}</a>
         ))}
         {cta ? <a href="/products" onClick={() => setOpen(false)} style={{ marginTop: "24px", backgroundColor: "#ea580c", color: "white", textAlign: "center", padding: "14px", borderRadius: "50px", fontSize: "15px", fontWeight: "700", textDecoration: "none" }}>{cta}</a> : null}
+        {logged ? <a href="/logout" style={{ marginTop: "14px", textAlign: "center", padding: "12px", color: "#6b7280", fontSize: "14px", fontWeight: "600", textDecoration: "none", border: "1px solid #e5e7eb", borderRadius: "50px" }}>{logoutLabel}</a> : null}
       </div>
     </>
   );
