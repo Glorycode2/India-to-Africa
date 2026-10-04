@@ -1,5 +1,7 @@
 "use client";
 
+import ProductModal from "../components/ProductModal";
+import WishlistHeart from "../components/WishlistHeart";
 import { useEffect, useState } from "react";
 
 const WHATSAPP_NUMBER = "917842280069";
@@ -56,6 +58,7 @@ export default function ProductsPage() {
   const [cart, setCart] = useState([]);
   const [message, setMessage] = useState("");
   const [category, setCategory] = useState("all");
+  const [selected, setSelected] = useState(null);
   const [categories, setCategories] = useState([]);
 
   const t = TRANSLATIONS[lang] || TRANSLATIONS["fr"];
@@ -192,7 +195,7 @@ export default function ProductsPage() {
 
         <div className="ab-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "24px" }}>
           {filtered.map(product => (
-            <div key={product.id}
+            <div key={product.id} onClick={() => setSelected(product)}
               style={{ backgroundColor: "white", borderRadius: "16px", border: "1px solid #e5e7eb", overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.05)", transition: "box-shadow 0.2s" }}
               onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.1)"}
               onMouseLeave={e => e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.05)"}
@@ -204,7 +207,7 @@ export default function ProductsPage() {
                 </p>
                 <h3 style={{ fontSize: "14px", fontWeight: "600", color: "#111827", marginBottom: "8px", lineHeight: "1.4" }}>{product.name}</h3>
                 <p style={{ fontSize: "20px", fontWeight: "800", color: "#111827", marginBottom: "12px" }}>{getPrice(product)}</p>
-                <button onClick={() => addToCart(product)} style={{ width: "100%", backgroundColor: "#ea580c", color: "white", border: "none", borderRadius: "8px", padding: "10px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
+                <button onClick={(e) => { e.stopPropagation(); addToCart(product); }} style={{ width: "100%", backgroundColor: "#ea580c", color: "white", border: "none", borderRadius: "8px", padding: "10px", fontSize: "14px", fontWeight: "600", cursor: "pointer" }}>
                   {t.add_to_cart}
                 </button>
               </div>
@@ -213,6 +216,7 @@ export default function ProductsPage() {
         </div>
       </div>
 
+      {selected && <ProductModal product={selected} onClose={() => setSelected(null)} lang={lang} price={getPrice(selected)} category={getCategoryLabel(selected.category)} addLabel={t.add_to_cart} onAdd={() => addToCart(selected)} />}
       <a href={"https://wa.me/" + WHATSAPP_NUMBER} target="_blank" rel="noopener noreferrer" style={{ position: "fixed", bottom: "24px", right: "24px", backgroundColor: "#25d366", color: "white", borderRadius: "50px", padding: "14px 20px", fontSize: "14px", fontWeight: "700", textDecoration: "none", display: "flex", alignItems: "center", gap: "10px", boxShadow: "0 4px 16px rgba(37,211,102,0.4)", zIndex: 999 }}>
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style={{ width: "22px", height: "22px" }} />
         {t.whatsapp}

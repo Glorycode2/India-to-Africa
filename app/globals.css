@@ -159,3 +159,7 @@ nav.ab-nav:has(.ab-nav-links) img[src="/afribazaar-logo-color.svg"] { height: 60
   nav.ab-nav .ab-nav-links button { padding: 4px 8px !important; font-size: 11px !important; }
   .ab-menu-wrap { display: block !important; flex: 0 0 auto; }
 }
+
+.ab-grid > div { position: relative; }
+
+.ab-grid > div { cursor: pointer; }

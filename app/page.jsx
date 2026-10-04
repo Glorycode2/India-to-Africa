@@ -70,6 +70,7 @@ export default function HomePage() {
             <a href="#shipping" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{t.nav_shipping}</a>
             <a href="/track-order" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{t.nav_track}</a>
             <a href="/login" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{t.nav_login}</a>
+            <a href="/wishlist" style={{ color: "#374151", textDecoration: "none", fontSize: "14px", fontWeight: "500" }}>{lang === "fr" ? "Favoris" : "Wishlist"}</a>
             </div>
             <div style={{ display: "flex", border: "1px solid #e5e7eb", borderRadius: "8px", overflow: "hidden" }}>
               {["fr", "en"].map((l) => (
@@ -80,7 +81,7 @@ export default function HomePage() {
             </div>
             <a href="/products" style={{ backgroundColor: "#ea580c", color: "white", padding: "10px 24px", borderRadius: "50px", fontSize: "14px", fontWeight: "600", textDecoration: "none" }}>{t.nav_shop}</a>
           </div>
-          <MobileMenu cta={t.nav_shop} links={[{ href: "#how-it-works", label: t.nav_how }, { href: "/products", label: t.nav_products }, { href: "#shipping", label: t.nav_shipping }, { href: "/track-order", label: t.nav_track }, { href: "/login", label: t.nav_login }]} />
+          <MobileMenu cta={t.nav_shop} links={[{ href: "#how-it-works", label: t.nav_how }, { href: "/products", label: t.nav_products }, { href: "#shipping", label: t.nav_shipping }, { href: "/track-order", label: t.nav_track }, { href: "/login", label: t.nav_login }, { href: "/wishlist", label: lang === "fr" ? "Favoris" : "Wishlist" }]} />
         </nav>
 
         {/* HERO */}
