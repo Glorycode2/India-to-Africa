@@ -98,6 +98,18 @@ export default function CheckoutPage() {
   const [done, setDone] = useState(false);
   const [orderId, setOrderId] = useState("");
   const [currency, setCurrency] = useState("USD");
+  const [feePct, setFeePct] = useState(10);
+  const [bands, setBands] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const { createClient } = await import("@supabase/supabase-js");
+      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const { data: s } = await sb.from("site_settings").select("value").eq("key", "service_fee_percent").maybeSingle();
+      if (s && !isNaN(parseFloat(s.value))) setFeePct(parseFloat(s.value));
+      const { data: list } = await sb.from("shipping_rates").select("*");
+      if (list) setBands(list);
+    })();
+  }, []);
   const [errors, setErrors] = useState({});
   const [errorMsg, setErrorMsg] = useState("");
   const [form, setForm] = useState({
@@ -134,8 +146,13 @@ export default function CheckoutPage() {
   }
 
   const subtotal = cart.reduce((sum, item) => sum + item.price_usd * item.quantity, 0);
-  const shipping = SHIPPING[form.country] || 30;
-  const service = parseFloat((subtotal * 0.1).toFixed(2));
+  const cartKg = cart.reduce((sum, item) => sum + (parseFloat(item.weight_kg) || 0.5) * item.quantity, 0);
+  const countryBands = bands.filter((b) => b.destination_country === form.country).sort((a, b) => parseFloat(a.weight_min_kg) - parseFloat(b.weight_min_kg));
+  const band = countryBands.find((b) => cartKg >= parseFloat(b.weight_min_kg) && cartKg <= parseFloat(b.weight_max_kg)) || (countryBands.length ? (cartKg < parseFloat(countryBands[0].weight_min_kg) ? countryBands[0] : countryBands[countryBands.length - 1]) : null);
+  const shipping = band ? parseFloat(band.cost_usd) : (SHIPPING[form.country] || 30);
+  const deliveryEn = band ? band.estimated_days_min + "-" + band.estimated_days_max + " days" : "14-21 days";
+  const deliveryText = band ? band.estimated_days_min + "-" + band.estimated_days_max + " " + (lang === "fr" ? "jours" : "days") : t.delivery_days;
+  const service = parseFloat((subtotal * feePct / 100).toFixed(2));
   const total = subtotal + shipping + service;
 
   function validate() {
@@ -179,7 +196,7 @@ export default function CheckoutPage() {
         total_charged_usd: parseFloat(total.toFixed(2)),
         shipping_fee_usd: shipping,
         service_fee_usd: service,
-        delivery_estimate: "14-21 days",
+        delivery_estimate: deliveryEn,
         customer_notes: form.notes,
         items: cart.map(item => ({ product_id: item.id, quantity: item.quantity, price_at_order_inr: item.price_inr || 0, price_at_order_usd: item.price_usd || 0 })),
       } });
@@ -324,7 +341,7 @@ export default function CheckoutPage() {
                 {[
                   { label: t.subtotal, value: convert(subtotal) },
                   { label: t.shipping_to + " " + form.country, value: convert(shipping) },
-                  { label: t.service_fee, value: convert(service) },
+                  { label: t.service_fee.replace("10%", feePct + "%"), value: convert(service) },
                 ].map(row => (
                   <div key={row.label} style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#6b7280", marginBottom: "8px" }}>
                     <span>{row.label}</span>
@@ -338,7 +355,7 @@ export default function CheckoutPage() {
               </div>
 
               <div style={{ backgroundColor: "#fff7ed", borderRadius: "8px", padding: "12px", marginTop: "16px" }}>
-                <p style={{ fontSize: "13px", color: "#c2410c", fontWeight: "500" }}>{t.estimated_delivery} {form.country}: {t.delivery_days}</p>
+                <p style={{ fontSize: "13px", color: "#c2410c", fontWeight: "500" }}>{t.estimated_delivery} {form.country}: {deliveryText}</p>
                 <p style={{ fontSize: "12px", color: "#ea580c", marginTop: "4px" }}>{t.payment_note}</p>
               </div>
             </div>
