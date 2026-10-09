@@ -27,6 +27,16 @@ export default function AdminProductsPage() {
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    (async () => {
+      const { createClient } = await import("@supabase/supabase-js");
+      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) return;
+      const { data: adm } = await sb.from("admins").select("user_id").maybeSingle();
+      if (adm) { setLoggedIn(true); loadProducts(); }
+    })();
+  }, []);
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);

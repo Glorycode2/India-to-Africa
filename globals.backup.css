@@ -190,10 +190,3 @@ nav.ab-nav:has(.ab-nav-links) img[src="/afribazaar-logo-color.svg"] { height: 60
   div.ab-prow > div:nth-child(2) { flex: 1 1 0 !important; min-width: 0 !important; }
   div.ab-pbtns { flex: 1 1 100% !important; flex-wrap: wrap !important; }
 }
-
-nav.ab-nav .ab-links-scroll { display: none !important; }
-nav.ab-nav .ab-nav-links > a { display: none !important; }
-nav.ab-nav .ab-menu-wrap { display: block !important; flex: 0 0 auto; }
-nav.ab-nav:has(.ab-nav-links) { gap: 12px !important; }
-nav.ab-nav:has(.ab-nav-links) > div:first-child { margin-right: auto !important; }
-nav.ab-nav .ab-nav-links { margin-left: 0 !important; width: auto !important; gap: 8px !important; }

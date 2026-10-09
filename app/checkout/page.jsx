@@ -165,79 +165,31 @@ export default function CheckoutPage() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
       );
 
-      // Step 1: find or create user
-      let userId = null;
-      const { data: existingUser } = await supabase
-        .from("users")
-        .select("id")
-        .eq("phone", form.phone)
-        .maybeSingle();
-
-      if (existingUser) {
-        userId = existingUser.id;
-      } else {
-        const { data: newUser, error: userError } = await supabase
-          .from("users")
-          .insert([{
-            name: form.name,
-            email: form.email || null,
-            phone: form.phone,
-            country: form.country,
-            address: form.city + ", " + form.country + " — " + form.address,
-          }])
-          .select("id")
-          .single();
-
-        if (userError) {
-          setErrorMsg("User error: " + userError.message);
-          setSubmitting(false);
-          return;
-        }
-        userId = newUser.id;
-      }
-
       // Step 2: create order
       const shippingAddress = form.name + "\n" + form.address + "\n" + form.city + ", " + form.country + "\nPhone: " + form.phone + (form.email ? "\nEmail: " + form.email : "");
 
-      const { data: order, error: orderError } = await supabase
-        .from("orders")
-        .insert([{
-          user_id: userId,
-          status: "pending",
-          total_original_inr: cart.reduce((sum, item) => sum + (item.price_inr || 0) * item.quantity, 0),
-          total_charged_usd: parseFloat(total.toFixed(2)),
-          shipping_fee_usd: shipping,
-          service_fee_usd: service,
-          delivery_estimate: "14-21 days",
-          shipping_address: shippingAddress,
-          customer_notes: form.notes,
-        }])
-        .select("id")
-        .single();
+      const { data: newOrderId, error: orderError } = await supabase.rpc("place_order", { p: {
+        name: form.name,
+        email: form.email || null,
+        phone: form.phone,
+        country: form.country,
+        address: form.city + ", " + form.country + " \u2014 " + form.address,
+        shipping_address: shippingAddress,
+        total_original_inr: cart.reduce((sum, item) => sum + (item.price_inr || 0) * item.quantity, 0),
+        total_charged_usd: parseFloat(total.toFixed(2)),
+        shipping_fee_usd: shipping,
+        service_fee_usd: service,
+        delivery_estimate: "14-21 days",
+        customer_notes: form.notes,
+        items: cart.map(item => ({ product_id: item.id, quantity: item.quantity, price_at_order_inr: item.price_inr || 0, price_at_order_usd: item.price_usd || 0 })),
+      } });
 
-      if (orderError) {
-        setErrorMsg("Order error: " + orderError.message);
+      if (orderError || !newOrderId) {
+        setErrorMsg("Order error: " + (orderError ? orderError.message : "no reference"));
         setSubmitting(false);
         return;
       }
-
-      // Step 3: save order items
-      const { error: itemsError } = await supabase
-        .from("order_items")
-        .insert(cart.map(item => ({
-          order_id: order.id,
-          product_id: item.id,
-          quantity: item.quantity,
-          price_at_order_inr: item.price_inr || 0,
-          price_at_order_usd: item.price_usd || 0,
-        })));
-
-      if (itemsError) {
-        setErrorMsg("Items error: " + itemsError.message);
-        setSubmitting(false);
-        return;
-      }
-
+      const order = { id: String(newOrderId) };
       localStorage.removeItem("cart");
       setOrderId(order.id.slice(0, 8).toUpperCase());
       setDone(true);

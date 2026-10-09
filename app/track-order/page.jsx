@@ -141,24 +141,7 @@ export default function TrackOrderPage() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
       );
 
-      let query = supabase
-        .from("orders")
-        .select(`*, users(name, email, phone, country), order_items(quantity, price_at_order_usd, products(name, image_url, category))`);
-
-      if (orderId.trim()) {
-        query = query.ilike("id", orderId.trim() + "%");
-      } else {
-        const { data: user } = await supabase.from("users").select("id").eq("phone", phone.trim()).maybeSingle();
-        if (!user) {
-          setError(lang === "fr" ? "Aucune commande trouvée avec ce numéro" : "No orders found with that phone number");
-          setLoading(false);
-          setSearched(true);
-          return;
-        }
-        query = query.eq("user_id", user.id).order("created_at", { ascending: false }).limit(1);
-      }
-
-      const { data, error: queryError } = await query.maybeSingle();
+      const { data, error: queryError } = await supabase.rpc("track_order", { p_order: orderId.trim(), p_phone: phone.trim() });
 
       if (queryError || !data) {
         setError(lang === "fr" ? "Aucune commande trouvée. Vérifiez vos informations." : "No order found. Please check your details.");
