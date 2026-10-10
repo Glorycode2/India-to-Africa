@@ -130,7 +130,7 @@ export default function WishlistPage() {
         )}
       </div>
 
-      <a href="https://wa.me/917842280069" target="_blank" rel="noopener noreferrer" style={{ position: "fixed", bottom: "24px", right: "24px", backgroundColor: "#25d366", color: "white", borderRadius: "50px", padding: "12px 20px", display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", fontSize: "14px", textDecoration: "none", boxShadow: "0 4px 12px rgba(0,0,0,0.2)" }}>
+      <a className="ab-wa" href="https://wa.me/917842280069" target="_blank" rel="noopener noreferrer" style={{ position: "fixed", bottom: "24px", right: "24px", backgroundColor: "#25d366", color: "white", borderRadius: "50px", padding: "12px 20px", display: "flex", alignItems: "center", gap: "8px", fontWeight: "700", fontSize: "14px", textDecoration: "none", boxShadow: "0 4px 12px rgba(0,0,0,0.2)" }}>
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style={{ width: "22px", height: "22px" }} />
         {t.chat}
       </a>

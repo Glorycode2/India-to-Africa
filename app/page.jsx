@@ -85,8 +85,8 @@ export default function HomePage() {
         </nav>
 
         {/* HERO */}
-        <div className="ab-hero" style={{ backgroundColor: "rgba(255,247,237,0.95)", padding: "80px 40px 0 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "520px" }}>
-          <div style={{ flex: 1, paddingTop: "40px" }}>
+        <div className="ab-hero" style={{ backgroundColor: "rgba(255,247,237,0.95)", padding: "28px 40px 0 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", minHeight: "520px" }}>
+          <div style={{ flex: 1, paddingTop: "0px" }}>
             <p style={{ fontSize: "14px", fontWeight: "500", color: "#6b7280", marginBottom: "14px" }}>{t.tagline}</p>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", backgroundColor: "#fed7aa", padding: "8px 16px", borderRadius: "50px", fontSize: "13px", color: "#c2410c", fontWeight: "600", marginBottom: "32px" }}>
               {t.badge}
@@ -181,7 +181,7 @@ export default function HomePage() {
         </div>
 
         {/* WHATSAPP */}
-        <a href={"https://wa.me/" + WHATSAPP_NUMBER} target="_blank" rel="noopener noreferrer" style={{ position: "fixed", bottom: "24px", right: "24px", backgroundColor: "#25d366", color: "white", borderRadius: "50px", padding: "14px 20px", fontSize: "14px", fontWeight: "700", textDecoration: "none", display: "flex", alignItems: "center", gap: "10px", boxShadow: "0 4px 16px rgba(37,211,102,0.4)", zIndex: 999 }}>
+        <a className="ab-wa" href={"https://wa.me/" + WHATSAPP_NUMBER} target="_blank" rel="noopener noreferrer" style={{ position: "fixed", bottom: "24px", right: "24px", backgroundColor: "#25d366", color: "white", borderRadius: "50px", padding: "14px 20px", fontSize: "14px", fontWeight: "700", textDecoration: "none", display: "flex", alignItems: "center", gap: "10px", boxShadow: "0 4px 16px rgba(37,211,102,0.4)", zIndex: 999 }}>
           <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style={{ width: "22px", height: "22px" }} />
           {t.whatsapp}
         </a>
