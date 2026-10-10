@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import { useLanguage } from "../i18n/useLanguage";
 
@@ -47,21 +48,7 @@ export default function CartPage() {
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f9fafb", fontFamily: "sans-serif" }}>
-      <nav style={{ backgroundColor: "#ea580c", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-                    <img src="/afribazaar-logo-white.svg" alt="AfriBazaar" style={{ height: "32px", display: "block" }} />
-        </a>
-        <div className="ab-navright" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <div style={{ display: "flex", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "8px", overflow: "hidden" }}>
-            {["fr", "en"].map(l => (
-              <button key={l} onClick={() => switchLang(l)} style={{ padding: "5px 12px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: lang === l ? "white" : "transparent", color: lang === l ? "#ea580c" : "white" }}>
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
-          <a href="/products" style={{ color: "white", fontSize: "14px", textDecoration: "none", fontWeight: "600" }}>{t.back_to_products}</a>
-        </div>
-      </nav>
+      <Header hideCart lang={lang} switchLang={switchLang} cartCount={cart.reduce((n, i) => n + (i.quantity || 1), 0)} />
 
       <div className="ab-container" style={{ maxWidth: "720px", margin: "0 auto", padding: "40px 24px" }}>
         <h1 style={{ fontSize: "28px", fontWeight: "800", color: "#111827", marginBottom: "32px" }}>{t.cart_title}</h1>

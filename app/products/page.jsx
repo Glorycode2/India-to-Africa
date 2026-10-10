@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "../components/Header";
 import ProductModal from "../components/ProductModal";
 import WishlistHeart from "../components/WishlistHeart";
 import { useEffect, useState } from "react";
@@ -128,23 +129,7 @@ export default function ProductsPage() {
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#f9fafb", fontFamily: "sans-serif" }}>
-      <nav className="ab-nav" style={{ backgroundColor: "#ea580c", padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: 0, zIndex: 100 }}>
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-                    <img src="/afribazaar-logo-white.svg" alt="AfriBazaar" style={{ height: "32px", display: "block" }} />
-        </a>
-        <div className="ab-navright" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <div style={{ display: "flex", border: "1px solid rgba(255,255,255,0.4)", borderRadius: "8px", overflow: "hidden" }}>
-            {["fr", "en"].map(l => (
-              <button key={l} onClick={() => switchLang(l)} style={{ padding: "5px 12px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: lang === l ? "white" : "transparent", color: lang === l ? "#ea580c" : "white" }}>
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
-          <a href="/cart" style={{ color: "white", fontSize: "14px", textDecoration: "none", fontWeight: "600" }}>
-            {t.cart_count} ({cart.reduce((sum, i) => sum + i.quantity, 0)})
-          </a>
-        </div>
-      </nav>
+      <Header lang={lang} switchLang={switchLang} cartCount={cart.reduce((n, i) => n + (i.quantity || 1), 0)} />
 
       {message && (
         <div style={{ backgroundColor: "#22c55e", color: "white", textAlign: "center", padding: "10px", fontSize: "14px", fontWeight: "600" }}>

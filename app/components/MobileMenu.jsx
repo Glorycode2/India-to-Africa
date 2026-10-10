@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
-export default function MobileMenu({ links, cta, logoutLabel }) {
+export default function MobileMenu({ links, cta, logoutLabel, iconColor }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
@@ -38,7 +38,7 @@ export default function MobileMenu({ links, cta, logoutLabel }) {
   return (
     <div className="ab-menu-wrap">
       <button onClick={() => setOpen(true)} aria-label="Menu" style={{ background: "none", border: "none", cursor: "pointer", padding: "6px" }}>
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ea580c" strokeWidth="2.5" strokeLinecap="round"><line x1="4" y1="7" x2="20" y2="7" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="17" x2="20" y2="17" /></svg>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={iconColor || "#ea580c"} strokeWidth="2.5" strokeLinecap="round"><line x1="4" y1="7" x2="20" y2="7" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="17" x2="20" y2="17" /></svg>
       </button>
       {mounted ? createPortal(panel, document.body) : null}
     </div>
