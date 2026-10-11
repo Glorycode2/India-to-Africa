@@ -102,7 +102,7 @@ export default function AdminProductsPage() {
         images: [form.image_url, ...(form.images_text || "").split(/\r?\n/)].map((s) => (s || "").trim()).filter(Boolean),
         source_url: form.source_url,
         source_platform: form.source_platform,
-        category: form.category,
+        category: (form.category || "").trim() || "Other",
         weight_kg: parseFloat(form.weight_kg) || 0.5,
         in_stock: form.in_stock,
         updated_at: new Date().toISOString(),
@@ -335,12 +335,21 @@ export default function AdminProductsPage() {
               <div>
                 <label style={{ display: "block", fontSize: "13px", color: "#374151", fontWeight: "500", marginBottom: "6px" }}>Category</label>
                 <select
-                  value={form.category}
+                  value={CATEGORIES.includes(form.category) ? form.category : "Other"}
                   onChange={(e) => update("category", e.target.value)}
                   style={{ width: "100%", border: "1px solid #d1d5db", borderRadius: "8px", padding: "10px 14px", fontSize: "14px", color: "#111827" }}
                 >
                   {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
+                {form.category === "Other" || !CATEGORIES.includes(form.category) ? (
+                  <input
+                    type="text"
+                    value={form.category === "Other" ? "" : form.category}
+                    onChange={(e) => update("category", e.target.value.trimStart() || "Other")}
+                    placeholder="Type your own category (customers will see it as a tab)"
+                    style={{ width: "100%", border: "1px solid #d1d5db", borderRadius: "8px", padding: "10px 14px", fontSize: "14px", color: "#111827", backgroundColor: "white", marginTop: "8px", boxSizing: "border-box" }}
+                  />
+                ) : null}
               </div>
 
               <div>
