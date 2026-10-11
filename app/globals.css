@@ -212,3 +212,8 @@ nav.ab-nav .ab-nav-links { margin-left: 0 !important; width: auto !important; ga
 }
 
 header.ab-hdr .ab-menu-wrap { display: block !important; visibility: visible !important; flex: 0 0 auto; }
+
+a[href^="https://wa.me/"]:has(img[src*="WhatsApp.svg"]) { opacity: 0.7 !important; transition: opacity 0.2s; }
+a[href^="https://wa.me/"]:has(img[src*="WhatsApp.svg"]):hover { opacity: 1 !important; }
+
+.ab-wa:hover { opacity: 1 !important; }

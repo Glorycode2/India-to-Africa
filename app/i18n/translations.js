@@ -63,7 +63,7 @@
     shipping: "Shipping",
     calculated_checkout: "calculated at checkout",
     total: "Total",
-    place_order: "Place Order Request",
+    place_order: "Proceed to Checkout",
     no_payment: "No payment needed now. We will contact you within 48 hours.",
 
     // CHECKOUT PAGE
@@ -223,7 +223,7 @@
     shipping: "Livraison",
     calculated_checkout: "calculée à la commande",
     total: "Total",
-    place_order: "Passer la commande",
+    place_order: "Passer \u00e0 la finalisation",
     no_payment: "Aucun paiement requis maintenant. Nous vous contacterons sous 48 heures.",
 
     // CHECKOUT PAGE
