@@ -182,14 +182,6 @@ export default function LoginPage() {
             {mode === "login" ? t.login_sub : t.signup_sub}
           </p>
 
-          <div style={{ display: "flex", backgroundColor: "#f3f4f6", borderRadius: "10px", padding: "4px", marginBottom: "24px" }}>
-            {["login", "signup"].map(m => (
-              <button key={m} onClick={() => { setMode(m); setMessage(""); }}
-                style={{ flex: 1, padding: "8px", borderRadius: "8px", border: "none", fontSize: "14px", fontWeight: "600", cursor: "pointer", backgroundColor: mode === m ? "white" : "transparent", color: mode === m ? "#111827" : "#6b7280", boxShadow: mode === m ? "0 1px 3px rgba(0,0,0,0.1)" : "none" }}>
-                {m === "login" ? t.log_in : t.sign_up}
-              </button>
-            ))}
-          </div>
 
           {message && (
             <div style={{ backgroundColor: messageType === "success" ? "#dcfce7" : "#fee2e2", color: messageType === "success" ? "#166534" : "#991b1b", padding: "12px 16px", borderRadius: "8px", fontSize: "13px", marginBottom: "20px", fontWeight: "500" }}>

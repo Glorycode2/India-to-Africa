@@ -26,7 +26,7 @@ export default function MobileMenu({ links, cta, logoutLabel, iconColor }) {
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#374151" strokeWidth="2.5" strokeLinecap="round"><line x1="5" y1="5" x2="19" y2="19" /><line x1="19" y1="5" x2="5" y2="19" /></svg>
           </button>
         </div>
-        {links.map((l) => (
+        {links.filter((l) => !(logged && l.href === "/login")).map((l) => (
           <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ color: "#111827", textDecoration: "none", fontSize: "17px", fontWeight: "600", padding: "14px 4px", borderBottom: "1px solid #f3f4f6" }}>{l.label}</a>
         ))}
         {cta ? <a href="/products" onClick={() => setOpen(false)} style={{ marginTop: "24px", backgroundColor: "#ea580c", color: "white", textAlign: "center", padding: "14px", borderRadius: "50px", fontSize: "15px", fontWeight: "700", textDecoration: "none" }}>{cta}</a> : null}
