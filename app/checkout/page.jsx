@@ -101,6 +101,7 @@ export default function CheckoutPage() {
   const [feePct, setFeePct] = useState(10);
   const [bands, setBands] = useState([]);
   const [catFees, setCatFees] = useState([]);
+  const [method, setMethod] = useState("plane");
   useEffect(() => {
     (async () => {
       const { createClient } = await import("@supabase/supabase-js");
@@ -150,7 +151,9 @@ export default function CheckoutPage() {
 
   const subtotal = cart.reduce((sum, item) => sum + item.price_usd * item.quantity, 0);
   const cartKg = cart.reduce((sum, item) => sum + (parseFloat(item.weight_kg) || 0.5) * item.quantity, 0);
-  const countryBands = bands.filter((b) => b.destination_country === form.country).sort((a, b) => parseFloat(a.weight_min_kg) - parseFloat(b.weight_min_kg));
+  const availableMethods = ["plane", "cargo", "courier"].filter((m) => bands.some((b) => b.destination_country === form.country && (b.method || "plane") === m));
+  const activeMethod = availableMethods.includes(method) ? method : (availableMethods[0] || "plane");
+  const countryBands = bands.filter((b) => b.destination_country === form.country && (b.method || "plane") === activeMethod).sort((a, b) => parseFloat(a.weight_min_kg) - parseFloat(b.weight_min_kg));
   const band = countryBands.find((b) => cartKg >= parseFloat(b.weight_min_kg) && cartKg <= parseFloat(b.weight_max_kg)) || (countryBands.length ? (cartKg < parseFloat(countryBands[0].weight_min_kg) ? countryBands[0] : countryBands[countryBands.length - 1]) : null);
   const shipping = band ? (parseFloat(band.cost_per_kg) > 0 ? parseFloat((parseFloat(band.cost_per_kg) * cartKg).toFixed(2)) : parseFloat(band.cost_usd)) : (SHIPPING[form.country] || 30);
   const deliveryEn = band ? band.estimated_days_min + "-" + band.estimated_days_max + " days" : "14-21 days";
@@ -193,6 +196,7 @@ export default function CheckoutPage() {
         email: form.email || null,
         phone: form.phone,
         country: form.country,
+        shipping_method: activeMethod,
         address: form.city + ", " + form.country + " \u2014 " + form.address,
         shipping_address: shippingAddress,
         total_original_inr: cart.reduce((sum, item) => sum + (item.price_inr || 0) * item.quantity, 0),
