@@ -100,6 +100,7 @@ export default function CheckoutPage() {
   const [currency, setCurrency] = useState("USD");
   const [feePct, setFeePct] = useState(10);
   const [bands, setBands] = useState([]);
+  const [catFees, setCatFees] = useState([]);
   useEffect(() => {
     (async () => {
       const { createClient } = await import("@supabase/supabase-js");
@@ -108,6 +109,8 @@ export default function CheckoutPage() {
       if (s && !isNaN(parseFloat(s.value))) setFeePct(parseFloat(s.value));
       const { data: list } = await sb.from("shipping_rates").select("*");
       if (list) setBands(list);
+      const { data: cfl } = await sb.from("category_fees").select("*");
+      if (cfl) setCatFees(cfl);
     })();
   }, []);
   const [errors, setErrors] = useState({});
@@ -149,10 +152,10 @@ export default function CheckoutPage() {
   const cartKg = cart.reduce((sum, item) => sum + (parseFloat(item.weight_kg) || 0.5) * item.quantity, 0);
   const countryBands = bands.filter((b) => b.destination_country === form.country).sort((a, b) => parseFloat(a.weight_min_kg) - parseFloat(b.weight_min_kg));
   const band = countryBands.find((b) => cartKg >= parseFloat(b.weight_min_kg) && cartKg <= parseFloat(b.weight_max_kg)) || (countryBands.length ? (cartKg < parseFloat(countryBands[0].weight_min_kg) ? countryBands[0] : countryBands[countryBands.length - 1]) : null);
-  const shipping = band ? parseFloat(band.cost_usd) : (SHIPPING[form.country] || 30);
+  const shipping = band ? (parseFloat(band.cost_per_kg) > 0 ? parseFloat((parseFloat(band.cost_per_kg) * cartKg).toFixed(2)) : parseFloat(band.cost_usd)) : (SHIPPING[form.country] || 30);
   const deliveryEn = band ? band.estimated_days_min + "-" + band.estimated_days_max + " days" : "14-21 days";
   const deliveryText = band ? band.estimated_days_min + "-" + band.estimated_days_max + " " + (lang === "fr" ? "jours" : "days") : t.delivery_days;
-  const service = parseFloat((subtotal * feePct / 100).toFixed(2));
+  const service = parseFloat(cart.reduce((sum, item) => { const cf = catFees.find((x) => x.category === item.category); const pct = cf ? parseFloat(cf.service_percent) : feePct; return sum + item.price_usd * item.quantity * pct / 100; }, 0).toFixed(2));
   const total = subtotal + shipping + service;
 
   function validate() {
@@ -341,7 +344,7 @@ export default function CheckoutPage() {
                 {[
                   { label: t.subtotal, value: convert(subtotal) },
                   { label: t.shipping_to + " " + form.country, value: convert(shipping) },
-                  { label: t.service_fee.replace("10%", feePct + "%"), value: convert(service) },
+                  { label: t.service_fee.replace(" (10%)", ""), value: convert(service) },
                 ].map(row => (
                   <div key={row.label} style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#6b7280", marginBottom: "8px" }}>
                     <span>{row.label}</span>

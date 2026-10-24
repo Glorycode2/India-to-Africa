@@ -12,7 +12,7 @@ async function getSb() {
 
 const box = { width: "100%", border: "1px solid #d1d5db", borderRadius: "8px", padding: "8px 10px", fontSize: "14px", color: "#111827", backgroundColor: "white", boxSizing: "border-box" };
 const lbl = { display: "block", fontSize: "12px", color: "#6b7280", marginBottom: "4px" };
-const EMPTY = { destination_country: "", weight_min_kg: "0", weight_max_kg: "", cost_usd: "", estimated_days_min: "", estimated_days_max: "" };
+const EMPTY = { destination_country: "", weight_min_kg: "0", weight_max_kg: "", cost_usd: "", cost_per_kg: "", estimated_days_min: "", estimated_days_max: "" };
 
 function Fields({ r, set }) {
   const f = (k, label, type) => (
@@ -26,7 +26,8 @@ function Fields({ r, set }) {
       <div style={{ gridColumn: "1 / -1" }}>{f("destination_country", "Country (same spelling as checkout)")}</div>
       {f("weight_min_kg", "From (kg)", "number")}
       {f("weight_max_kg", "To (kg)", "number")}
-      {f("cost_usd", "Cost (USD)", "number")}
+      {f("cost_usd", "Flat cost (USD)", "number")}
+      {f("cost_per_kg", "Per kg (USD)", "number")}
       {f("estimated_days_min", "Days min", "number")}
       {f("estimated_days_max", "Days max", "number")}
     </div>
@@ -47,6 +48,23 @@ function RateRow({ row, onSave, onDelete }) {
   );
 }
 
+function CatRow({ row, onSave, onDelete }) {
+  const [r, setR] = useState(row);
+  return (
+    <div style={{ display: "flex", gap: "8px", alignItems: "flex-end", flexWrap: "wrap", marginBottom: "10px" }}>
+      <div style={{ flex: "2 1 160px" }}>
+        <label style={lbl}>Category</label>
+        <input value={r.category} disabled style={{ ...box, backgroundColor: "#f3f4f6" }} />
+      </div>
+      <div style={{ flex: "1 1 90px" }}>
+        <label style={lbl}>Service fee (%)</label>
+        <input type="number" value={r.service_percent} onChange={(e) => setR({ ...r, service_percent: e.target.value })} style={box} />
+      </div>
+      <button onClick={() => onSave(r)} style={{ padding: "9px 18px", borderRadius: "8px", border: "none", backgroundColor: "#ea580c", color: "white", fontWeight: "600", fontSize: "13px", cursor: "pointer" }}>Save</button>
+      <button onClick={() => onDelete(r)} style={{ padding: "9px 18px", borderRadius: "8px", border: "none", backgroundColor: "#fee2e2", color: "#b91c1c", fontWeight: "600", fontSize: "13px", cursor: "pointer" }}>Delete</button>
+    </div>
+  );
+}
 export default function SettingsPage() {
   const [state, setState] = useState("checking");
   const [password, setPassword] = useState("");
@@ -54,6 +72,9 @@ export default function SettingsPage() {
   const [rows, setRows] = useState([]);
   const [msg, setMsg] = useState("");
   const [fresh, setFresh] = useState(EMPTY);
+  const [cats, setCats] = useState([]);
+  const [catList, setCatList] = useState([]);
+  const [freshCat, setFreshCat] = useState({ category: "", service_percent: "" });
 
   function flash(m) { setMsg(m); setTimeout(() => setMsg(""), 3000); }
 
@@ -69,6 +90,10 @@ export default function SettingsPage() {
     if (s) setFee(String(s.value));
     const { data: list } = await sb.from("shipping_rates").select("*").order("destination_country").order("weight_min_kg");
     setRows(list || []);
+    const { data: cf } = await sb.from("category_fees").select("*").order("category");
+    setCats(cf || []);
+    const { data: pc } = await sb.from("products").select("category");
+    setCatList([...new Set((pc || []).map((p) => p.category).filter(Boolean))]);
   }
 
   useEffect(() => {
@@ -103,11 +128,12 @@ export default function SettingsPage() {
       destination_country: String(r.destination_country || "").trim(),
       weight_min_kg: parseFloat(r.weight_min_kg) || 0,
       weight_max_kg: parseFloat(r.weight_max_kg),
-      cost_usd: parseFloat(r.cost_usd),
+      cost_usd: parseFloat(r.cost_usd) || 0,
+      cost_per_kg: (r.cost_per_kg === "" || r.cost_per_kg === null || r.cost_per_kg === undefined) ? null : parseFloat(r.cost_per_kg),
       estimated_days_min: parseInt(r.estimated_days_min),
       estimated_days_max: parseInt(r.estimated_days_max),
     };
-    if (!payload.destination_country || isNaN(payload.weight_max_kg) || isNaN(payload.cost_usd) || isNaN(payload.estimated_days_min) || isNaN(payload.estimated_days_max)) {
+    if (!payload.destination_country || isNaN(payload.weight_max_kg) || (payload.cost_usd <= 0 && !(payload.cost_per_kg > 0)) || isNaN(payload.estimated_days_min) || isNaN(payload.estimated_days_max)) {
       flash("Fill in every box"); return false;
     }
     const q = r.id ? sb.from("shipping_rates").update(payload).eq("id", r.id).select() : sb.from("shipping_rates").insert([payload]).select();
@@ -125,6 +151,32 @@ export default function SettingsPage() {
     if (error) { flash("Not deleted: " + error.message); return; }
     await loadAll(sb);
     flash("Deleted");
+  }
+
+  async function saveCat(r) {
+    const name = String(r.category || "").trim();
+    const pct = parseFloat(r.service_percent);
+    if (!name || isNaN(pct) || pct < 0 || pct > 100) { flash("Enter a category and a percentage from 0 to 100"); return false; }
+    const sb = await getSb();
+    const { error } = await sb.from("category_fees").upsert({ category: name, service_percent: pct });
+    if (error) { flash("Not saved: " + error.message); return false; }
+    await loadAll(sb);
+    flash("Saved");
+    return true;
+  }
+
+  async function delCat(r) {
+    if (!window.confirm("Delete this category fee?")) return;
+    const sb = await getSb();
+    const { error } = await sb.from("category_fees").delete().eq("category", r.category);
+    if (error) { flash("Not deleted: " + error.message); return; }
+    await loadAll(sb);
+    flash("Deleted");
+  }
+
+  async function addCat() {
+    const ok = await saveCat(freshCat);
+    if (ok) setFreshCat({ category: "", service_percent: "" });
   }
 
   async function addNew() {
@@ -166,8 +218,26 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <h2 style={{ fontSize: "16px", fontWeight: "700", color: "#111827", marginBottom: "6px" }}>Shipping rates by weight</h2>
-        <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "14px" }}>One row per country and weight range. The delivery days shown to customers come from the same row.</p>
+        <div style={{ backgroundColor: "white", border: "1px solid #e5e7eb", borderRadius: "12px", padding: "16px", marginBottom: "24px" }}>
+          <h2 style={{ fontSize: "16px", fontWeight: "700", color: "#111827", marginBottom: "6px" }}>Service fee by category</h2>
+          <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "12px" }}>A category listed here uses its own percentage. Any other category uses the general service fee above.</p>
+          {cats.map((row) => (
+            <CatRow key={row.category + "-" + row.service_percent} row={row} onSave={saveCat} onDelete={delCat} />
+          ))}
+          <div style={{ display: "flex", gap: "8px", alignItems: "flex-end", flexWrap: "wrap", marginTop: "10px", paddingTop: "12px", borderTop: "1px dashed #e5e7eb" }}>
+            <div style={{ flex: "2 1 160px" }}>
+              <label style={lbl}>New category</label>
+              <input list="ab-cats" value={freshCat.category} onChange={(e) => setFreshCat({ ...freshCat, category: e.target.value })} style={box} />
+              <datalist id="ab-cats">{catList.map((n) => <option key={n} value={n} />)}</datalist>
+            </div>
+            <div style={{ flex: "1 1 90px" }}>
+              <label style={lbl}>Service fee (%)</label>
+              <input type="number" value={freshCat.service_percent} onChange={(e) => setFreshCat({ ...freshCat, service_percent: e.target.value })} style={box} />
+            </div>
+            <button onClick={addCat} style={{ padding: "9px 18px", borderRadius: "8px", border: "none", backgroundColor: "#ea580c", color: "white", fontWeight: "700", fontSize: "13px", cursor: "pointer" }}>Add</button>
+          </div>
+        </div><h2 style={{ fontSize: "16px", fontWeight: "700", color: "#111827", marginBottom: "6px" }}>Shipping rates by weight</h2>
+        <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "14px" }}>One row per country and weight range. Fill in "Per kg" to charge by weight (cost per kg times the cart weight), or leave it empty to use the flat cost. The delivery days shown to customers come from the same row.</p>
 
         {rows.map((row) => (
           <RateRow key={row.id + "-" + (row.cost_usd || "") + "-" + (row.weight_max_kg || "")} row={row} onSave={saveRow} onDelete={delRow} />
