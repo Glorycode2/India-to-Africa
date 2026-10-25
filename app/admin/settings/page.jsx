@@ -12,7 +12,7 @@ async function getSb() {
 
 const box = { width: "100%", border: "1px solid #d1d5db", borderRadius: "8px", padding: "8px 10px", fontSize: "14px", color: "#111827", backgroundColor: "white", boxSizing: "border-box" };
 const lbl = { display: "block", fontSize: "12px", color: "#6b7280", marginBottom: "4px" };
-const EMPTY = { destination_country: "", weight_min_kg: "0", weight_max_kg: "", cost_usd: "", cost_per_kg: "", estimated_days_min: "", estimated_days_max: "" };
+const EMPTY = { destination_country: "", method: "plane", weight_min_kg: "0", weight_max_kg: "", cost_usd: "", cost_per_kg: "", estimated_days_min: "", estimated_days_max: "" };
 
 function Fields({ r, set }) {
   const f = (k, label, type) => (
@@ -24,6 +24,7 @@ function Fields({ r, set }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: "10px" }}>
       <div style={{ gridColumn: "1 / -1" }}>{f("destination_country", "Country (same spelling as checkout)")}</div>
+      <div><label style={lbl}>Method</label><select value={r.method || "plane"} onChange={(e) => set("method", e.target.value)} style={box}><option value="plane">Plane</option><option value="cargo">Cargo boat</option><option value="courier">Private courier</option></select></div>
       {f("weight_min_kg", "From (kg)", "number")}
       {f("weight_max_kg", "To (kg)", "number")}
       {f("cost_usd", "Flat cost (USD)", "number")}
@@ -126,6 +127,7 @@ export default function SettingsPage() {
     const sb = await getSb();
     const payload = {
       destination_country: String(r.destination_country || "").trim(),
+      method: r.method || "plane",
       weight_min_kg: parseFloat(r.weight_min_kg) || 0,
       weight_max_kg: parseFloat(r.weight_max_kg),
       cost_usd: parseFloat(r.cost_usd) || 0,
