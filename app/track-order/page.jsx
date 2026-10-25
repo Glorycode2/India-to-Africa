@@ -9,15 +9,15 @@ const TRANSLATIONS = {
   en: {
     site_name: "AfriBazaar",
     track_title: "Track Your Order",
-    track_sub: "Enter your order ID or phone number to see your order status",
+    track_sub: "Enter your order ID and the phone number used at checkout to see your order status",
     order_id_label: "Order ID",
     order_id_placeholder: "e.g. 5B7784AC",
-    or: "or",
+    or: "and",
     phone_used: "Phone number used at checkout",
     track_btn: "Track Order",
     tracking: "Searching...",
     no_order_found: "No order found",
-    no_order_sub: "Please check your order ID or phone number and try again",
+    no_order_sub: "Please check your order ID and phone number and try again",
     current_status: "Current Status",
     order_progress: "Order Progress",
     order_details: "Order Details",
@@ -47,15 +47,15 @@ const TRANSLATIONS = {
   fr: {
     site_name: "AfriBazaar",
     track_title: "Suivre ma commande",
-    track_sub: "Entrez votre numéro de commande ou votre téléphone pour voir le statut",
+    track_sub: "Entrez votre num\u00e9ro de commande et le t\u00e9l\u00e9phone utilis\u00e9 \u00e0 la commande pour voir le statut",
     order_id_label: "Numéro de commande",
     order_id_placeholder: "ex. 5B7784AC",
-    or: "ou",
+    or: "et",
     phone_used: "Numéro de téléphone utilisé à la commande",
     track_btn: "Suivre",
     tracking: "Recherche en cours...",
     no_order_found: "Aucune commande trouvée",
-    no_order_sub: "Veuillez vérifier votre numéro de commande ou téléphone et réessayer",
+    no_order_sub: "Veuillez v\u00e9rifier votre num\u00e9ro de commande et votre t\u00e9l\u00e9phone et r\u00e9essayer",
     current_status: "Statut actuel",
     order_progress: "Progression de la commande",
     order_details: "Détails de la commande",
@@ -125,8 +125,8 @@ export default function TrackOrderPage() {
   }
 
   async function handleSearch() {
-    if (!orderId.trim() && !phone.trim()) {
-      setError(lang === "fr" ? "Veuillez entrer votre numéro de commande ou téléphone" : "Please enter your order ID or phone number");
+    if (!orderId.trim() || !phone.trim()) {
+      setError(lang === "fr" ? "Veuillez entrer votre num\u00e9ro de commande et votre t\u00e9l\u00e9phone" : "Please enter your order ID and phone number");
       return;
     }
 
@@ -172,7 +172,7 @@ export default function TrackOrderPage() {
         <div style={{ backgroundColor: "white", borderRadius: "16px", border: "1px solid #e5e7eb", padding: "28px", marginBottom: "32px" }}>
           <div style={{ marginBottom: "16px" }}>
             <label style={{ display: "block", fontSize: "13px", color: "#374151", fontWeight: "500", marginBottom: "6px" }}>{t.order_id_label}</label>
-            <input type="text" value={orderId} onChange={e => { setOrderId(e.target.value); setPhone(""); setError(""); }}
+            <input type="text" value={orderId} onChange={e => { setOrderId(e.target.value); setError(""); }}
               placeholder={t.order_id_placeholder}
               style={{ width: "100%", border: "1px solid #d1d5db", borderRadius: "8px", padding: "10px 14px", fontSize: "14px", color: "#111827", boxSizing: "border-box" }} />
           </div>
@@ -185,7 +185,7 @@ export default function TrackOrderPage() {
 
           <div style={{ marginBottom: "20px" }}>
             <label style={{ display: "block", fontSize: "13px", color: "#374151", fontWeight: "500", marginBottom: "6px" }}>{t.phone_used}</label>
-            <input type="tel" value={phone} onChange={e => { setPhone(e.target.value); setOrderId(""); setError(""); }}
+            <input type="tel" value={phone} onChange={e => { setPhone(e.target.value); setError(""); }}
               placeholder="+227 xx xx xx xx"
               style={{ width: "100%", border: "1px solid #d1d5db", borderRadius: "8px", padding: "10px 14px", fontSize: "14px", color: "#111827", boxSizing: "border-box" }} />
           </div>
@@ -244,7 +244,6 @@ export default function TrackOrderPage() {
                   { label: t.order_id_display, value: "#" + order.id.slice(0, 8).toUpperCase() },
                   { label: t.date, value: new Date(order.created_at).toLocaleDateString() },
                   { label: t.customer, value: order.users?.name || "N/A" },
-                  { label: t.phone_label, value: order.users?.phone || "N/A" },
                   { label: t.delivery_to, value: order.users?.country || "N/A" },
                   { label: t.estimated, value: order.delivery_estimate || "14-21 days" },
                 ].map(item => (

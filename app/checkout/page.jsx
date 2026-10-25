@@ -362,11 +362,11 @@ export default function CheckoutPage() {
               </div>
 
               <div style={{ backgroundColor: "#fff7ed", borderRadius: "8px", padding: "12px", marginTop: "16px" }}>
-                {availableMethods.length > 1 && (
+                {(
                 <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
-                  {availableMethods.map((m) => (
-                    <button key={m} type="button" onClick={() => setMethod(m)} style={{ flex: 1, padding: "10px 6px", borderRadius: "8px", border: activeMethod === m ? "2px solid #ea580c" : "1px solid #d1d5db", backgroundColor: activeMethod === m ? "#fff7ed" : "white", color: activeMethod === m ? "#c2410c" : "#111827", fontWeight: "600", fontSize: "13px", cursor: "pointer" }}>
-                      {m === "plane" ? (lang === "fr" ? "Par avion" : "By plane") : m === "cargo" ? (lang === "fr" ? "Par cargo" : "By cargo") : (lang === "fr" ? "Coursier privé" : "Private courier")}
+                  {["plane", "cargo", "courier"].map((m) => (
+                    <button key={m} type="button" disabled={!availableMethods.includes(m)} onClick={() => setMethod(m)} style={{ opacity: availableMethods.includes(m) ? 1 : 0.4, flex: 1, padding: "10px 6px", borderRadius: "8px", border: activeMethod === m ? "2px solid #ea580c" : "1px solid #d1d5db", backgroundColor: activeMethod === m ? "#fff7ed" : "white", color: activeMethod === m ? "#c2410c" : "#111827", fontWeight: "600", fontSize: "13px", cursor: "pointer" }}>
+                      {m === "plane" ? (lang === "fr" ? "Avion" : "Plane") : m === "cargo" ? (lang === "fr" ? "Bateau cargo" : "Cargo boat") : (lang === "fr" ? "Coursier privé" : "Private courier")}
                     </button>
                   ))}
                 </div>
