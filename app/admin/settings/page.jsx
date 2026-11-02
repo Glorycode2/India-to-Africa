@@ -26,7 +26,7 @@ const TR = {
     svc_title: "Service fee", svc_label: "Percentage of the order total (%)", cat_title: "Service fee by category",
     cat_help: "A category listed here uses its own percentage. Any other category uses the general service fee above.",
     rates_title: "Shipping rates by weight",
-    rates_help: "One row per country, method and weight range. Fill in \u201cPer kg\u201d to charge by weight (cost per kg times the cart weight), or leave it empty to use the flat cost. The delivery days shown to customers come from the same row.",
+    rates_help: "One row per country, method and weight range. Fill in \u201cPer kg\u201d to charge by weight (cost per kg times the cart weight). The delivery days shown to customers come from the same row.",
     add_new: "Add a new rate", add_rate: "Add rate",
   },
   fr: {
@@ -40,7 +40,7 @@ const TR = {
     svc_title: "Frais de service", svc_label: "Pourcentage du total de la commande (%)", cat_title: "Frais de service par cat\u00e9gorie",
     cat_help: "Une cat\u00e9gorie list\u00e9e ici utilise son propre pourcentage. Toute autre cat\u00e9gorie utilise les frais de service g\u00e9n\u00e9raux ci-dessus.",
     rates_title: "Tarifs de livraison par poids",
-    rates_help: "Une ligne par pays, par m\u00e9thode et par tranche de poids. Remplissez \u00ab Par kg \u00bb pour facturer au poids (prix par kg multipli\u00e9 par le poids du panier), ou laissez vide pour utiliser le co\u00fbt fixe. Les jours de livraison affich\u00e9s aux clients viennent de la m\u00eame ligne.",
+    rates_help: "Une ligne par pays, par m\u00e9thode et par tranche de poids. Remplissez \u00ab Par kg \u00bb pour facturer au poids (prix par kg multipli\u00e9 par le poids du panier). Les jours de livraison affich\u00e9s aux clients viennent de la m\u00eame ligne.",
     add_new: "Ajouter un nouveau tarif", add_rate: "Ajouter le tarif",
   },
 };
@@ -59,7 +59,6 @@ function Fields({ r, set }) {
       <div><label style={lbl}>{tr("method")}</label><select value={r.method || "plane"} onChange={(e) => set("method", e.target.value)} style={box}><option value="plane">{tr("plane")}</option><option value="cargo">{tr("cargo")}</option><option value="courier">{tr("courier")}</option></select></div>
       {f("weight_min_kg", tr("from"), "number")}
       {f("weight_max_kg", tr("to"), "number")}
-      {f("cost_usd", tr("flat"), "number")}
       {f("cost_per_kg", tr("perkg"), "number")}
       {f("estimated_days_min", tr("dmin"), "number")}
       {f("estimated_days_max", tr("dmax"), "number")}

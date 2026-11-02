@@ -152,12 +152,13 @@ export default function CheckoutPage() {
   const subtotal = cart.reduce((sum, item) => sum + item.price_usd * item.quantity, 0);
   const cartKg = cart.reduce((sum, item) => sum + (parseFloat(item.weight_kg) || 0.5) * item.quantity, 0);
   const availableMethods = ["plane", "cargo", "courier"].filter((m) => bands.some((b) => b.destination_country === form.country && (b.method || "plane") === m));
-  const activeMethod = availableMethods.includes(method) ? method : (availableMethods[0] || "plane");
+  const activeMethod = method;
   const countryBands = bands.filter((b) => b.destination_country === form.country && (b.method || "plane") === activeMethod).sort((a, b) => parseFloat(a.weight_min_kg) - parseFloat(b.weight_min_kg));
   const band = countryBands.find((b) => cartKg >= parseFloat(b.weight_min_kg) && cartKg <= parseFloat(b.weight_max_kg)) || (countryBands.length ? (cartKg < parseFloat(countryBands[0].weight_min_kg) ? countryBands[0] : countryBands[countryBands.length - 1]) : null);
-  const shipping = band ? (parseFloat(band.cost_per_kg) > 0 ? parseFloat((parseFloat(band.cost_per_kg) * cartKg).toFixed(2)) : parseFloat(band.cost_usd)) : (SHIPPING[form.country] || 30);
+  const shipping = band ? (parseFloat(band.cost_per_kg) > 0 ? parseFloat((parseFloat(band.cost_per_kg) * cartKg).toFixed(2)) : parseFloat(band.cost_usd)) : (activeMethod !== "plane" ? 0 : (SHIPPING[form.country] || 30));
+  const needsConfirm = !band && activeMethod !== "plane";
   const deliveryEn = band ? band.estimated_days_min + "-" + band.estimated_days_max + " days" : "14-21 days";
-  const deliveryText = band ? band.estimated_days_min + "-" + band.estimated_days_max + " " + (lang === "fr" ? "jours" : "days") : t.delivery_days;
+  const deliveryText = band ? band.estimated_days_min + "-" + band.estimated_days_max + " " + (lang === "fr" ? "jours" : "days") : (needsConfirm ? (lang === "fr" ? "\u00c0 confirmer" : "To be confirmed") : t.delivery_days);
   const service = parseFloat(cart.reduce((sum, item) => { const cf = catFees.find((x) => x.category === item.category); const pct = cf ? parseFloat(cf.service_percent) : feePct; return sum + item.price_usd * item.quantity * pct / 100; }, 0).toFixed(2));
   const total = subtotal + shipping + service;
 
@@ -347,7 +348,8 @@ export default function CheckoutPage() {
               <div style={{ marginTop: "16px" }}>
                 {[
                   { label: t.subtotal, value: convert(subtotal) },
-                  { label: t.shipping_to + " " + form.country, value: convert(shipping) },
+                  { label: lang === "fr" ? "Poids total" : "Total weight", value: cartKg.toFixed(2) + " kg" },
+                  { label: t.shipping_to + " " + form.country, value: needsConfirm ? (lang === "fr" ? "\u00c0 confirmer sur WhatsApp" : "To be confirmed on WhatsApp") : convert(shipping) },
                   { label: t.service_fee.replace(" (10%)", ""), value: convert(service) },
                 ].map(row => (
                   <div key={row.label} style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#6b7280", marginBottom: "8px" }}>
@@ -365,7 +367,7 @@ export default function CheckoutPage() {
                 {(
                 <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
                   {["plane", "cargo", "courier"].map((m) => (
-                    <button key={m} type="button" disabled={!availableMethods.includes(m)} onClick={() => setMethod(m)} style={{ opacity: availableMethods.includes(m) ? 1 : 0.4, flex: 1, padding: "10px 6px", borderRadius: "8px", border: activeMethod === m ? "2px solid #ea580c" : "1px solid #d1d5db", backgroundColor: activeMethod === m ? "#fff7ed" : "white", color: activeMethod === m ? "#c2410c" : "#111827", fontWeight: "600", fontSize: "13px", cursor: "pointer" }}>
+                    <button key={m} type="button" onClick={() => setMethod(m)} style={{ flex: 1, padding: "10px 6px", borderRadius: "8px", border: activeMethod === m ? "2px solid #ea580c" : "1px solid #d1d5db", backgroundColor: activeMethod === m ? "#fff7ed" : "white", color: activeMethod === m ? "#c2410c" : "#111827", fontWeight: "600", fontSize: "13px", cursor: "pointer" }}>
                       {m === "plane" ? (lang === "fr" ? "Avion" : "Plane") : m === "cargo" ? (lang === "fr" ? "Bateau cargo" : "Cargo boat") : (lang === "fr" ? "Coursier privé" : "Private courier")}
                     </button>
                   ))}
