@@ -1,11 +1,11 @@
 "use client";
+import { getSharedSb } from "../lib/supabase";
 import { useEffect } from "react";
 
 export default function LogoutPage() {
   useEffect(() => {
     (async () => {
-      const { createClient } = await import("@supabase/supabase-js");
-      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const sb = (await getSharedSb());
       await sb.auth.signOut();
       window.location.href = "/";
     })();

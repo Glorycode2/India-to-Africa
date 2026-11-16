@@ -1,4 +1,5 @@
 "use client";
+import { getSharedSb } from "../lib/supabase";
 
 import { useState, useEffect } from "react";
 
@@ -110,11 +111,7 @@ export default function LoginPage() {
     setMessage("");
 
     try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-      );
+      const supabase = (await getSharedSb());
 
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({

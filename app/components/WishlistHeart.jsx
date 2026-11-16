@@ -1,11 +1,11 @@
 "use client";
+import { getSharedSb } from "../lib/supabase";
 import { useState, useEffect } from "react";
 
 let client = null;
 async function getClient() {
   if (client) return client;
-  const { createClient } = await import("@supabase/supabase-js");
-  client = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  client = (await getSharedSb());
   return client;
 }
 

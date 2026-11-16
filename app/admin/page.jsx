@@ -1,4 +1,5 @@
 "use client";
+import { getSharedSb } from "../lib/supabase";
 
 import { useEffect, useState } from "react";
 
@@ -94,8 +95,7 @@ export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
     (async () => {
-      const { createClient } = await import("@supabase/supabase-js");
-      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const sb = (await getSharedSb());
       const { data: { session } } = await sb.auth.getSession();
       if (!session) return;
       const { data: adm } = await sb.from("admins").select("user_id").maybeSingle();
@@ -117,8 +117,7 @@ export default function AdminPage() {
 
   async function handleLogin() {
     try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const sb = (await getSharedSb());
       const { error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password });
       if (error) throw error;
       const { data: row } = await sb.from("admins").select("user_id").maybeSingle();
@@ -133,11 +132,7 @@ export default function AdminPage() {
   async function loadOrders() {
     setLoading(true);
     try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-      );
+      const supabase = (await getSharedSb());
       const { data } = await supabase
         .from("orders")
         .select(`*, users(name, email, phone), order_items(quantity, price_at_order_usd, products(name, image_url))`)
@@ -151,11 +146,7 @@ export default function AdminPage() {
 
   async function updateStatus(orderId, newStatus) {
     try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-      );
+      const supabase = (await getSharedSb());
       await supabase.from("orders").update({ status: newStatus, updated_at: new Date().toISOString() }).eq("id", orderId);
       loadOrders();
     } catch (e) {

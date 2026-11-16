@@ -1,4 +1,5 @@
 "use client";
+import { getSharedSb } from "../lib/supabase";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
@@ -10,8 +11,7 @@ export default function MobileMenu({ links, cta, logoutLabel, iconColor }) {
   const [logged, setLogged] = useState(false);
   useEffect(() => {
     (async () => {
-      const { createClient } = await import("@supabase/supabase-js");
-      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const sb = (await getSharedSb());
       const { data: { session } } = await sb.auth.getSession();
       setLogged(!!session);
     })();

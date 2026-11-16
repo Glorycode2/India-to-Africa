@@ -1,4 +1,5 @@
 "use client";
+import { getSharedSb } from "../lib/supabase";
 
 import Header from "../components/Header";
 import ProductModal from "../components/ProductModal";
@@ -79,11 +80,7 @@ export default function ProductsPage() {
 
   async function loadProducts() {
     try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-      );
+      const supabase = (await getSharedSb());
       const { data } = await supabase.from("products").select("*").eq("in_stock", true).limit(100);
       if (data) {
         setProducts(data);

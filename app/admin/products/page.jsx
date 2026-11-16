@@ -1,4 +1,5 @@
 "use client";
+import { getSharedSb } from "../../lib/supabase";
 
 import { useEffect, useState } from "react";
 
@@ -71,8 +72,7 @@ export default function AdminProductsPage() {
   function switchLang(l) { setLang(l); try { localStorage.setItem("lang", l); } catch (e) {} }
   useEffect(() => {
     (async () => {
-      const { createClient } = await import("@supabase/supabase-js");
-      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const sb = (await getSharedSb());
       const { data: { session } } = await sb.auth.getSession();
       if (!session) return;
       const { data: adm } = await sb.from("admins").select("user_id").maybeSingle();
@@ -87,8 +87,7 @@ export default function AdminProductsPage() {
 
   async function handleLogin() {
     try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const sb = (await getSharedSb());
       const { error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password });
       if (error) throw error;
       const { data: row } = await sb.from("admins").select("user_id").maybeSingle();
@@ -105,11 +104,7 @@ export default function AdminProductsPage() {
   }
 
   async function getSupabase() {
-    const { createClient } = await import("@supabase/supabase-js");
-    return createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    );
+    return (await getSharedSb());
   }
 
   async function loadProducts() {

@@ -1,4 +1,5 @@
 "use client";
+import { getSharedSb } from "../lib/supabase";
 
 import { useEffect, useState } from "react";
 
@@ -104,8 +105,7 @@ export default function CheckoutPage() {
   const [method, setMethod] = useState("plane");
   useEffect(() => {
     (async () => {
-      const { createClient } = await import("@supabase/supabase-js");
-      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      const sb = (await getSharedSb());
       const { data: s } = await sb.from("site_settings").select("value").eq("key", "service_fee_percent").maybeSingle();
       if (s && !isNaN(parseFloat(s.value))) setFeePct(parseFloat(s.value));
       const { data: list } = await sb.from("shipping_rates").select("*");
@@ -183,11 +183,7 @@ export default function CheckoutPage() {
     setErrorMsg("");
 
     try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-      );
+      const supabase = (await getSharedSb());
 
       // Step 2: create order
       const shippingAddress = form.name + "\n" + form.address + "\n" + form.city + ", " + form.country + "\nPhone: " + form.phone + (form.email ? "\nEmail: " + form.email : "");

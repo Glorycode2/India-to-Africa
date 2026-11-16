@@ -1,4 +1,5 @@
 "use client";
+import { getSharedSb } from "../lib/supabase";
 
 import Header from "../components/Header";
 import { useEffect, useState } from "react";
@@ -136,11 +137,7 @@ export default function TrackOrderPage() {
     setSearched(false);
 
     try {
-      const { createClient } = await import("@supabase/supabase-js");
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-      );
+      const supabase = (await getSharedSb());
 
       const { data, error: queryError } = await supabase.rpc("track_order", { p_order: orderId.trim(), p_phone: phone.trim() });
 

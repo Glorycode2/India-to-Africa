@@ -1,4 +1,5 @@
 "use client";
+import { getSharedSb } from "../lib/supabase";
 import { useState, useEffect } from "react";
 
 export default function AdminBar() {
@@ -16,8 +17,7 @@ export default function AdminBar() {
       if (alive) setAdmin(!!data);
     }
     (async () => {
-      const { createClient } = await import("@supabase/supabase-js");
-      sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      sb = (await getSharedSb());
       const { data: { session } } = await sb.auth.getSession();
       await check(session);
       const r = sb.auth.onAuthStateChange((_e, s) => { setTimeout(() => check(s), 0); });
